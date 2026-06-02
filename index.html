@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solsystems App Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #181818;
+    --border: #222222;
+    --border2: #2a2a2a;
+    --text: #f0f0f0;
+    --muted: #666;
+    --accent: #c8ff00;
+    --accent2: #ff6b35;
+    --accent3: #00d4ff;
+    --green: #00ff88;
+    --red: #ff4444;
+    --amber: #ffaa00;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; min-height: 100vh; }
+  
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,10,10,0.95); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 56px;
+  }
+  .nav-brand { display: flex; align-items: center; gap: 10px; }
+  .nav-logo { width: 28px; height: 28px; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+  .nav-logo span { font-size: 14px; font-weight: 800; color: #000; }
+  .nav-title { font-size: 14px; font-weight: 700; letter-spacing: 0.05em; color: var(--text); }
+  .nav-sub { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; }
+  .nav-tabs { display: flex; gap: 2px; }
+  .nav-tab {
+    padding: 6px 16px; border-radius: 6px; font-size: 12px; font-weight: 600;
+    cursor: pointer; border: none; background: transparent; color: var(--muted);
+    letter-spacing: 0.04em; transition: all 0.15s;
+  }
+  .nav-tab:hover { color: var(--text); background: var(--surface2); }
+  .nav-tab.active { background: var(--accent); color: #000; }
+  .nav-date { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+
+  /* PAGES */
+  .page { display: none; padding: 80px 2rem 3rem; max-width: 1100px; margin: 0 auto; }
+  .page.active { display: block; }
+
+  /* OVERVIEW PAGE */
+  .hero { padding: 3rem 0 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; }
+  .hero-tag { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 1rem; }
+  .hero-title { font-size: 48px; font-weight: 800; line-height: 1.05; margin-bottom: 1rem; }
+  .hero-title span { color: var(--accent); }
+  .hero-sub { font-size: 15px; color: var(--muted); max-width: 520px; line-height: 1.6; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 2.5rem; }
+  .stat-card { background: var(--surface); padding: 1.5rem; }
+  .stat-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+  .stat-value { font-size: 28px; font-weight: 800; line-height: 1; }
+  .stat-value.green { color: var(--green); }
+  .stat-value.accent { color: var(--accent); }
+  .stat-value.amber { color: var(--amber); }
+  .stat-delta { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  .section-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1rem; text-transform: uppercase; }
+
+  /* APP CARDS */
+  .apps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
+  .app-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1.25rem; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
+  }
+  .app-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+  .app-card.active-app { border-color: var(--accent); }
+  .app-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+  .app-card.tier1::before { background: var(--accent); }
+  .app-card.tier2::before { background: var(--accent3); }
+  .app-card.tier3::before { background: var(--accent2); }
+  .app-number { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); margin-bottom: 6px; }
+  .app-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .app-niche { font-size: 12px; color: var(--muted); margin-bottom: 12px; line-height: 1.4; }
+  .app-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill { font-family: 'DM Mono', monospace; font-size: 10px; padding: 3px 8px; border-radius: 4px; }
+  .pill-price { background: rgba(200,255,0,0.1); color: var(--accent); }
+  .pill-effort { background: rgba(0,212,255,0.1); color: var(--accent3); }
+  .pill-status-live { background: rgba(0,255,136,0.1); color: var(--green); }
+  .pill-status-building { background: rgba(255,170,0,0.1); color: var(--amber); }
+  .pill-status-planned { background: rgba(102,102,102,0.15); color: var(--muted); }
+
+  /* PIPELINE TABLE */
+  .pipeline-table { width: 100%; border-collapse: collapse; }
+  .pipeline-table th { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); letter-spacing: 0.06em; }
+  .pipeline-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .pipeline-table tr:last-child td { border-bottom: none; }
+  .pipeline-table tr:hover td { background: var(--surface2); }
+  .tier-badge { font-size: 10px; padding: 2px 7px; border-radius: 3px; font-family: 'DM Mono', monospace; }
+  .t1 { background: rgba(200,255,0,0.12); color: var(--accent); }
+  .t2 { background: rgba(0,212,255,0.12); color: var(--accent3); }
+  .t3 { background: rgba(255,107,53,0.12); color: var(--accent2); }
+
+  /* PLAYBOOK PAGE */
+  .playbook-phases { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 2rem; }
+  .phase-item { background: var(--surface); }
+  .phase-header { display: flex; align-items: center; gap: 1rem; padding: 1.25rem 1.5rem; cursor: pointer; }
+  .phase-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); min-width: 60px; }
+  .phase-name { font-size: 14px; font-weight: 700; flex: 1; }
+  .phase-time { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); }
+  .phase-toggle { font-size: 18px; color: var(--muted); transition: transform 0.2s; }
+  .phase-body { display: none; padding: 0 1.5rem 1.5rem; }
+  .phase-body.open { display: block; }
+  .phase-item.expanded .phase-toggle { transform: rotate(45deg); }
+  .checklist { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .check-icon { width: 16px; height: 16px; border: 1px solid var(--border2); border-radius: 3px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; }
+  .check-icon.done { background: var(--green); border-color: var(--green); }
+  .check-icon.done::after { content: '✓'; font-size: 10px; color: #000; }
+
+  .loop-diagram { display: flex; align-items: center; gap: 0; margin: 1.5rem 0; overflow-x: auto; padding-bottom: 8px; }
+  .loop-step { background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px; padding: 10px 16px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+  .loop-arrow { color: var(--accent); font-size: 16px; padding: 0 8px; flex-shrink: 0; }
+
+  /* TRACKER PAGE */
+  .tracker-tabs { display: flex; gap: 4px; margin-bottom: 1.5rem; }
+  .tracker-tab { padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--muted); transition: all 0.15s; }
+  .tracker-tab:hover { border-color: var(--border2); color: var(--text); }
+  .tracker-tab.active { border-color: var(--accent); color: var(--accent); background: rgba(200,255,0,0.05); }
+  .tracker-panel { display: none; }
+  .tracker-panel.active { display: block; }
+
+  .metrics-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 2rem; }
+  .metric-cell { background: var(--surface); padding: 1rem; }
+  .metric-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 0.06em; margin-bottom: 4px; }
+  .metric-val { font-size: 22px; font-weight: 800; }
+  .metric-val.live { color: var(--green); }
+  .metric-val.target { color: var(--accent); }
+  .metric-val.pending { color: var(--muted); }
+
+  .weekly-table { width: 100%; border-collapse: collapse; }
+  .weekly-table th { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .weekly-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 13px; font-family: 'DM Mono', monospace; color: var(--muted); }
+  .weekly-table tr:last-child td { border-bottom: none; }
+  .weekly-table .current-week td { color: var(--text); background: rgba(200,255,0,0.03); }
+  .empty-cell { color: var(--border2) !important; }
+
+  .aso-block { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; margin-bottom: 1rem; }
+  .aso-label { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.06em; margin-bottom: 6px; }
+  .aso-value { font-size: 13px; line-height: 1.6; }
+  .keyword-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .kw-chip { font-family: 'DM Mono', monospace; font-size: 11px; padding: 3px 9px; background: rgba(0,212,255,0.08); color: var(--accent3); border-radius: 4px; }
+
+  /* CREATORS PAGE */
+  .outreach-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 2rem; }
+  .creator-table { width: 100%; border-collapse: collapse; }
+  .creator-table th { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .creator-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 12px; }
+  .status-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 6px; }
+  .dot-green { background: var(--green); }
+  .dot-amber { background: var(--amber); }
+  .dot-gray { background: var(--muted); }
+
+  .template-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; font-size: 13px; line-height: 1.8; color: var(--muted); white-space: pre-wrap; font-family: 'DM Mono', monospace; }
+  .template-box mark { background: rgba(200,255,0,0.15); color: var(--accent); border-radius: 2px; padding: 0 2px; }
+
+  /* FOOTER */
+  .page-footer { border-top: 1px solid var(--border); margin-top: 3rem; padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-text { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+  .last-updated { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+
+  @media (max-width: 768px) {
+    .stat-grid { grid-template-columns: repeat(2,1fr); }
+    .apps-grid { grid-template-columns: 1fr; }
+    .metrics-grid { grid-template-columns: repeat(3,1fr); }
+    .hero-title { font-size: 32px; }
+    nav { padding: 0 1rem; }
+    .page { padding: 70px 1rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo"><span>S</span></div>
+    <div>
+      <div class="nav-title">SOLSYSTEMS APP STUDIO</div>
+      <div class="nav-sub">by Ram · ramalingaa@gmail.com</div>
+    </div>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('overview')">Overview</button>
+    <button class="nav-tab" onclick="showPage('playbook')">Playbook</button>
+    <button class="nav-tab" onclick="showPage('tracker')">Tracker</button>
+    <button class="nav-tab" onclick="showPage('creators')">Creators</button>
+  </div>
+  <div class="nav-date" id="nav-date"></div>
+</nav>
+
+<!-- OVERVIEW PAGE -->
+<div class="page active" id="page-overview">
+  <div class="hero">
+    <div class="hero-tag">// SOLSYSTEMS APP STUDIO · JUNE 2026</div>
+    <h1 class="hero-title">Build. Ship.<br><span>Find the winner.</span></h1>
+    <p class="hero-sub">Niche apps. $5–20/month. USA + EU paying customers. AI-assisted timelines — days not months. The bottleneck is audience, not code.</p>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-label">APPS IN PIPELINE</div>
+      <div class="stat-value accent">15</div>
+      <div class="stat-delta">3 active picks</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">CURRENT MRR</div>
+      <div class="stat-value green">$0</div>
+      <div class="stat-delta">Target: $5,000</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">LIVE APPS</div>
+      <div class="stat-value amber">0</div>
+      <div class="stat-delta">KidLearn → next</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">TARGET SUBS</div>
+      <div class="stat-value">500</div>
+      <div class="stat-delta">@ $10/mo avg</div>
+    </div>
+  </div>
+
+  <div class="section-title">Active Picks — Top 3</div>
+  <div class="apps-grid">
+    <div class="app-card tier1 active-app">
+      <div class="app-number">#01 · ACTIVE</div>
+      <div class="app-name">KidLearn ESL</div>
+      <div class="app-niche">English for ESL preschoolers · Arabic, Spanish, French variants</div>
+      <div class="app-meta">
+        <span class="pill pill-price">$9–12/mo</span>
+        <span class="pill pill-effort">Hours to package</span>
+        <span class="pill pill-status-building">Building</span>
+      </div>
+    </div>
+    <div class="app-card tier1">
+      <div class="app-number">#02 · TBD</div>
+      <div class="app-name">Pick #2</div>
+      <div class="app-niche">Select from the pipeline below</div>
+      <div class="app-meta">
+        <span class="pill pill-status-planned">Planned</span>
+      </div>
+    </div>
+    <div class="app-card tier1">
+      <div class="app-number">#03 · TBD</div>
+      <div class="app-name">Pick #3</div>
+      <div class="app-niche">Select from the pipeline below</div>
+      <div class="app-meta">
+        <span class="pill pill-status-planned">Planned</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Full Pipeline — All 15 Ideas</div>
+  <table class="pipeline-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>APP</th>
+        <th>TIER</th>
+        <th>NICHE</th>
+        <th>PRICE</th>
+        <th>BUILD</th>
+        <th>MARKET</th>
+        <th>STATUS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>KidLearn — Arabic ESL</td><td><span class="tier-badge t1">T1</span></td><td>Arabic ESL families</td><td>$9–12</td><td>Hours</td><td>USA/EU/MENA</td><td><span class="pill pill-status-building">Building</span></td></tr>
+      <tr><td>2</td><td>KidLearn — Spanish ESL</td><td><span class="tier-badge t1">T1</span></td><td>Spanish ESL families</td><td>$9–12</td><td>Hours</td><td>USA/EU</td><td><span class="pill pill-status-planned">Planned</span></td></tr>
+      <tr><td>3</td><td>KidLearn — French ESL</td><td><span class="tier-badge t1">T1</span></td><td>French/African families</td><td>$9–12</td><td>Hours</td><td>EU/Canada</td><td><span class="pill pill-status-planned">Planned</span></td></tr>
+      <tr><td>4</td><td>Carnivore Diet Tracker</td><td><span class="tier-badge t1">T1</span></td><td>Animal-based dieters</td><td>$8–15</td><td>Days</td><td>USA/EU</td><td><span class="pill pill-status-planned">Planned</span></td></tr>
+      <tr><td>5</td><td>ADHD Morning Routine</td><td><span class="tier-badge t1">T1</span></td><td>ADHD adults</td><td>$10–15</td><td>Days</td><td>USA/EU</td><td><span class="pill pill-status-planned">Planned</span></td></tr>
+      <tr><td>6</td><td>Stoic Daily Journal</td><td><span class="tier-badge t2">T2</span></td><td>Philosophy community</td><td>$6–10</td><td>Days</td><td>USA/EU</td><td><span class="pill pill-status-planned">Planned</span></td></tr>
+      <tr><td>7</td><td>Box Breathing — First Responders</td><td><span class="tier-badge t2">T2</span></td><td>Police/fire/EMS</td><td>$8–12</td><td>Days</td><td>USA</td><td><span class="pill pill-status-planned">Planned</span></td></tr>
+      <tr><td>8</td><td>Bar Exam Flashcards</td><td><span class="tier-badge t2">T2</span></td><td>Law students</td><td>$15–20</td><td>Days</td><td>USA</td><td><span class="pill pill-status-planned">Planned</span></td></tr>
+      <tr><td>9</td><td>Homeschool Daily Scheduler</td><td><span class="tier-badge t2">T2</span></td><td>Homeschool parents</td><td>$8–12</td><td>Days</td><td>USA/EU</td><td><span class="pill pill-status-planned">Planned</span></td></tr>
+      <tr><td>10</td><td>Nurse Shift Planner</td><td><span class="tier-badge t2">T2</span></td><td>Nurses/shift workers</td><td>$5–10</td><td>Days</td><td>USA/EU</td><td><span class="pill pill-status-planned">Planned</span></td></tr>
+      <tr><td>11</td><td>Golf Handicap Tracker</td><td><span class="tier-badge t3">T3</span></td><td>Amateur golfers</td><td>$5–8</td><td>Days</td><td>USA/EU</td><td><span class="pill pill-status-planned">Planned</span></td></tr>
+      <tr><td>12</td><td>Freelancer Invoice + Tax</td><td><span class="tier-badge t3">T3</span></td><td>1099 freelancers</td><td>$8–15</td><td>Days</td><td>USA</td><td><span class="pill pill-status-planned">Planned</span></td></tr>
+      <tr><td>13</td><td>Pet Medication Tracker</td><td><span class="tier-badge t3">T3</span></td><td>Pet owners</td><td>$5–8</td><td>Hours</td><td>USA/EU</td><td><span class="pill pill-status-planned">Planned</span></td></tr>
+      <tr><td>14</td><td>Ramadan Tracker</td><td><span class="tier-badge t3">T3</span></td><td>Muslim community</td><td>$5–9</td><td>Days</td><td>USA/EU/MENA</td><td><span class="pill pill-status-planned">Planned</span></td></tr>
+      <tr><td>15</td><td>Wedding Budget Tracker</td><td><span class="tier-badge t3">T3</span></td><td>Engaged couples</td><td>$10–15</td><td>Days</td><td>USA/EU</td><td><span class="pill pill-status-planned">Planned</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-footer">
+    <span class="footer-text">Solsystems App Studio · Ram · Hyderabad, India</span>
+    <span class="last-updated">Last updated: <span id="last-updated-date"></span></span>
+  </div>
+</div>
+
+<!-- PLAYBOOK PAGE -->
+<div class="page" id="page-playbook">
+  <div class="hero" style="padding-top:2rem;">
+    <div class="hero-tag">// THE LOOP</div>
+    <h1 class="hero-title" style="font-size:36px;">Build → ASO → Ship →<br><span>Creators → Acquire → Double Down</span></h1>
+  </div>
+
+  <div class="loop-diagram">
+    <div class="loop-step">01 BUILD</div>
+    <div class="loop-arrow">→</div>
+    <div class="loop-step">02 ASO</div>
+    <div class="loop-arrow">→</div>
+    <div class="loop-step">03 SUBMIT</div>
+    <div class="loop-arrow">→</div>
+    <div class="loop-step">04 CREATORS</div>
+    <div class="loop-arrow">→</div>
+    <div class="loop-step">05 ACQUIRE</div>
+    <div class="loop-arrow">→</div>
+    <div class="loop-step">06 MEASURE</div>
+    <div class="loop-arrow">→</div>
+    <div class="loop-step" style="border-color: var(--accent); color: var(--accent);">DOUBLE DOWN</div>
+  </div>
+
+  <div class="playbook-phases">
+    <div class="phase-item" onclick="togglePhase(this)">
+      <div class="phase-header">
+        <span class="phase-num">PHASE 01</span>
+        <span class="phase-name">Build</span>
+        <span class="phase-time">1–3 days (AI-assisted)</span>
+        <span class="phase-toggle">+</span>
+      </div>
+      <div class="phase-body">
+        <ul class="checklist">
+          <li><span class="check-icon"></span>Define the niche precisely — who is the exact user, what pain, what country</li>
+          <li><span class="check-icon"></span>Identify incumbent — what do they currently use or pay for</li>
+          <li><span class="check-icon"></span>Define the ONE differentiator (not 5, just 1)</li>
+          <li><span class="check-icon"></span>Fork closest existing codebase (e.g. KidLearn for ESL variants)</li>
+          <li><span class="check-icon"></span>Swap content, word banks, UI copy, color theme</li>
+          <li><span class="check-icon"></span>Test touch interactions on real iPhone + Android device</li>
+          <li><span class="check-icon"></span>Set up RevenueCat — 3-day free trial → $9.99/month or $49.99/year</li>
+          <li><span class="check-icon"></span>Wrap with Capacitor for native iOS + Android (npx cap init → sync → build)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="phase-item" onclick="togglePhase(this)">
+      <div class="phase-header">
+        <span class="phase-num">PHASE 02</span>
+        <span class="phase-name">ASO — App Store Optimisation</span>
+        <span class="phase-time">2–3 hours</span>
+        <span class="phase-toggle">+</span>
+      </div>
+      <div class="phase-body">
+        <ul class="checklist">
+          <li><span class="check-icon"></span>Title: [Primary Keyword] — [Benefit] (max 30 chars)</li>
+          <li><span class="check-icon"></span>Subtitle: Second most important keyword (30 chars)</li>
+          <li><span class="check-icon"></span>Keyword field: 100 chars, comma-separated, medium volume + low competition</li>
+          <li><span class="check-icon"></span>Description: First 3 lines lead with the pain — shown without "read more"</li>
+          <li><span class="check-icon"></span>5 screenshots per device size (iPhone 6.7", iPad 12.9")</li>
+          <li><span class="check-icon"></span>AI-generated app icon (1024x1024)</li>
+          <li><span class="check-icon"></span>Category: Education (primary)</li>
+          <li><span class="check-icon"></span>Set up SKStoreReviewRequest to trigger after 3rd session</li>
+        </ul>
+      </div>
+    </div>
+    <div class="phase-item" onclick="togglePhase(this)">
+      <div class="phase-header">
+        <span class="phase-num">PHASE 03</span>
+        <span class="phase-name">Creator Outreach</span>
+        <span class="phase-time">Ongoing — 20 DMs/week per app</span>
+        <span class="phase-toggle">+</span>
+      </div>
+      <div class="phase-body">
+        <ul class="checklist">
+          <li><span class="check-icon"></span>Target: micro-influencers 5K–100K, engagement >3%, niche-specific</li>
+          <li><span class="check-icon"></span>Find via hashtag search on Instagram + TikTok</li>
+          <li><span class="check-icon"></span>Offer: free lifetime access + 30% affiliate on first month per referral</li>
+          <li><span class="check-icon"></span>Send 20 DMs per week per app (expect 10–15% response, 2–3 posts)</li>
+          <li><span class="check-icon"></span>1 good post from 50K niche creator = 50–200 installs</li>
+          <li><span class="check-icon"></span>Track all outreach in Creators tab of this dashboard</li>
+        </ul>
+      </div>
+    </div>
+    <div class="phase-item" onclick="togglePhase(this)">
+      <div class="phase-header">
+        <span class="phase-num">PHASE 04</span>
+        <span class="phase-name">Acquire & Measure</span>
+        <span class="phase-time">Weekly review — every Monday</span>
+        <span class="phase-toggle">+</span>
+      </div>
+      <div class="phase-body">
+        <ul class="checklist">
+          <li><span class="check-icon"></span>Track: Installs, Trial starts, Trial→Paid conversion (target >25%), MRR, Churn</li>
+          <li><span class="check-icon"></span>CAC target: under $10 (organic/creator channel)</li>
+          <li><span class="check-icon"></span>LTV target: over $50 (5+ months at $10/month)</li>
+          <li><span class="check-icon"></span>Tools: RevenueCat (subs) + App Store Connect Analytics (installs)</li>
+          <li><span class="check-icon"></span>Decision: 20 subs month 1 → continue · 50 subs month 2 → double down · under 10 after 6 weeks → diagnose or kill</li>
+        </ul>
+      </div>
+    </div>
+    <div class="phase-item" onclick="togglePhase(this)">
+      <div class="phase-header">
+        <span class="phase-num">PHASE 05</span>
+        <span class="phase-name">Double Down</span>
+        <span class="phase-time">When app hits 50+ subscribers</span>
+        <span class="phase-toggle">+</span>
+      </div>
+      <div class="phase-body">
+        <ul class="checklist">
+          <li><span class="check-icon"></span>Expand content (v2 — more words/features)</li>
+          <li><span class="check-icon"></span>Add AI premium tier at $14.99/month</li>
+          <li><span class="check-icon"></span>Run paid UA on Meta/TikTok — $5/day to start</li>
+          <li><span class="check-icon"></span>Localise for 1 additional language/market</li>
+          <li><span class="check-icon"></span>Reach out to 50 more creators</li>
+          <li><span class="check-icon"></span>PR: pitch niche blogs, podcasts, newsletters</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="footer-text">Solsystems App Studio · The Loop v1.0</span>
+    <span class="last-updated">Updated: June 2026</span>
+  </div>
+</div>
+
+<!-- TRACKER PAGE -->
+<div class="page" id="page-tracker">
+  <div class="hero" style="padding-top:2rem;">
+    <div class="hero-tag">// METRICS TRACKER</div>
+    <h1 class="hero-title" style="font-size:36px;">Numbers don't lie.<br><span>Track everything.</span></h1>
+  </div>
+
+  <div class="tracker-tabs">
+    <button class="tracker-tab active" onclick="showTracker('kidlearn', this)">KidLearn ESL</button>
+    <button class="tracker-tab" onclick="showTracker('app2', this)">App #2</button>
+    <button class="tracker-tab" onclick="showTracker('app3', this)">App #3</button>
+    <button class="tracker-tab" onclick="showTracker('mrr', this)">MRR Overview</button>
+  </div>
+
+  <div class="tracker-panel active" id="tracker-kidlearn">
+    <div class="metrics-grid">
+      <div class="metric-cell">
+        <div class="metric-label">TOTAL INSTALLS</div>
+        <div class="metric-val pending">—</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-label">TRIAL STARTS</div>
+        <div class="metric-val pending">—</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-label">PAID SUBS</div>
+        <div class="metric-val pending">—</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-label">MRR</div>
+        <div class="metric-val pending">$0</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-label">CONVERSION</div>
+        <div class="metric-val target">25% target</div>
+      </div>
+    </div>
+
+    <div class="section-title">Weekly Breakdown</div>
+    <table class="weekly-table">
+      <thead>
+        <tr><th>WEEK</th><th>INSTALLS</th><th>TRIAL STARTS</th><th>PAID SUBS</th><th>MRR</th><th>NOTES</th></tr>
+      </thead>
+      <tbody>
+        <tr class="current-week"><td>Week 1</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td style="color:var(--muted);font-size:11px;">App Store submission</td></tr>
+        <tr><td>Week 2</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td></td></tr>
+        <tr><td>Week 3</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td></td></tr>
+        <tr><td>Week 4</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td></td></tr>
+        <tr><td>Week 5</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td></td></tr>
+        <tr><td>Week 6</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td class="empty-cell">—</td><td style="color:var(--accent);font-size:11px;">⚡ Decision checkpoint</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 2rem;">
+      <div class="section-title">ASO — KidLearn</div>
+      <div class="aso-block">
+        <div class="aso-label">APP TITLE</div>
+        <div class="aso-value">Kids English Learning — ESL Preschool App</div>
+      </div>
+      <div class="aso-block">
+        <div class="aso-label">SUBTITLE</div>
+        <div class="aso-value">Learn Words, Ages 3–6 | No Ads</div>
+      </div>
+      <div class="aso-block">
+        <div class="aso-label">KEYWORDS</div>
+        <div class="keyword-chips">
+          <span class="kw-chip">esl kids</span>
+          <span class="kw-chip">english preschool</span>
+          <span class="kw-chip">toddler learning</span>
+          <span class="kw-chip">kids vocabulary</span>
+          <span class="kw-chip">abc learning</span>
+          <span class="kw-chip">phonics app</span>
+          <span class="kw-chip">learn english</span>
+          <span class="kw-chip">arabic english kids</span>
+          <span class="kw-chip">esl arabic</span>
+          <span class="kw-chip">bilingual preschool</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tracker-panel" id="tracker-app2">
+    <div style="padding: 3rem; text-align: center; color: var(--muted); border: 1px dashed var(--border); border-radius: 12px;">
+      <div style="font-size: 32px; margin-bottom: 1rem;">+</div>
+      <div style="font-size: 14px; font-weight: 700; margin-bottom: 8px;">Pick App #2 from the pipeline</div>
+      <div style="font-size: 12px;">Go to Overview → select from the 15 ideas → tell Ram to update this tracker</div>
+    </div>
+  </div>
+
+  <div class="tracker-panel" id="tracker-app3">
+    <div style="padding: 3rem; text-align: center; color: var(--muted); border: 1px dashed var(--border); border-radius: 12px;">
+      <div style="font-size: 32px; margin-bottom: 1rem;">+</div>
+      <div style="font-size: 14px; font-weight: 700; margin-bottom: 8px;">Pick App #3 from the pipeline</div>
+      <div style="font-size: 12px;">Go to Overview → select from the 15 ideas → tell Ram to update this tracker</div>
+    </div>
+  </div>
+
+  <div class="tracker-panel" id="tracker-mrr">
+    <div class="metrics-grid" style="grid-template-columns: repeat(3,1fr);">
+      <div class="metric-cell">
+        <div class="metric-label">TOTAL MRR</div>
+        <div class="metric-val green">$0</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-label">MRR TARGET</div>
+        <div class="metric-val target">$5,000</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-label">TOTAL SUBSCRIBERS</div>
+        <div class="metric-val pending">0</div>
+      </div>
+    </div>
+    <div style="padding: 2rem; text-align: center; color: var(--muted); border: 1px dashed var(--border); border-radius: 12px; margin-top: 1rem;">
+      <div style="font-size: 13px;">MRR chart will populate once first app is live and generating revenue.</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="footer-text">Decision rule: 50 subs → double down · under 10 after 6 weeks → diagnose or kill</span>
+  </div>
+</div>
+
+<!-- CREATORS PAGE -->
+<div class="page" id="page-creators">
+  <div class="hero" style="padding-top:2rem;">
+    <div class="hero-tag">// CREATOR OUTREACH</div>
+    <h1 class="hero-title" style="font-size:36px;">Content is the<br><span>acquisition channel.</span></h1>
+  </div>
+
+  <div class="outreach-stats">
+    <div class="metric-cell">
+      <div class="metric-label">CONTACTED</div>
+      <div class="metric-val pending">0</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-label">RESPONDED</div>
+      <div class="metric-val pending">0</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-label">POSTED</div>
+      <div class="metric-val pending">0</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-label">INSTALLS FROM CREATORS</div>
+      <div class="metric-val pending">0</div>
+    </div>
+  </div>
+
+  <div class="section-title">Outreach Log</div>
+  <table class="creator-table">
+    <thead>
+      <tr><th>CREATOR</th><th>PLATFORM</th><th>FOLLOWERS</th><th>APP</th><th>CONTACTED</th><th>STATUS</th><th>RESULT</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="color:var(--muted); font-style:italic;">No outreach logged yet</td>
+        <td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 2rem;">
+    <div class="section-title">Target Hashtags — KidLearn</div>
+    <div class="keyword-chips" style="margin-bottom: 2rem;">
+      <span class="kw-chip">#eslfamily</span>
+      <span class="kw-chip">#arabicmom</span>
+      <span class="kw-chip">#spanishmom</span>
+      <span class="kw-chip">#bilingualfamily</span>
+      <span class="kw-chip">#homeschoolmom</span>
+      <span class="kw-chip">#preschoolmom</span>
+      <span class="kw-chip">#toddlerlearning</span>
+      <span class="kw-chip">#kidslearning</span>
+      <span class="kw-chip">#montessorimom</span>
+      <span class="kw-chip">#esiteacher</span>
+    </div>
+
+    <div class="section-title">Outreach Message Template</div>
+    <div class="template-box">Hi <mark>[Name]</mark>,
+
+I've been following your content on <mark>[topic]</mark> — your post about <mark>[specific post]</mark> really resonated.
+
+I built <mark>[App Name]</mark> — a <mark>[one-line description]</mark> for <mark>[their exact audience]</mark>. I think your audience would genuinely love it.
+
+I'd love to offer you free lifetime access + a revenue share on any subscriptions you drive (tracked with a promo code). No obligation, no script — just use it honestly and share if you love it.
+
+Would you be open to a quick look?
+
+Ram</div>
+
+    <div style="margin-top: 1.5rem; padding: 1rem 1.25rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;">
+      <div class="section-title" style="margin-bottom: 8px;">Deal Structure</div>
+      <div style="font-size: 13px; color: var(--muted); line-height: 1.8;">
+        ✓ Free lifetime access + promo code (10–20% off for their audience)<br>
+        ✓ Affiliate: 30% of first month per referral (tracked via RevenueCat)<br>
+        ✗ Flat fee: avoid until you have MRR to support it<br><br>
+        <strong style="color: var(--text);">Volume target:</strong> 20 DMs/week per app · Expect 10–15% response · 2–3 will post · 1 good post from 50K creator = 50–200 installs
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="footer-text">Solsystems App Studio · Creator Outreach v1.0</span>
+  </div>
+</div>
+
+<script>
+  // Set dates
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  document.getElementById('nav-date').textContent = dateStr;
+  document.getElementById('last-updated-date').textContent = dateStr;
+
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function togglePhase(el) {
+    const body = el.querySelector('.phase-body');
+    const isOpen = body.classList.contains('open');
+    document.querySelectorAll('.phase-body').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.phase-item').forEach(i => i.classList.remove('expanded'));
+    if (!isOpen) { body.classList.add('open'); el.classList.add('expanded'); }
+  }
+
+  function showTracker(id, btn) {
+    document.querySelectorAll('.tracker-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tracker-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tracker-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
