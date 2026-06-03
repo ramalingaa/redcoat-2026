@@ -7,159 +7,186 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f5f5f0; --surface: #ffffff; --surface2: #f9f9f6;
-    --border: #e8e8e2; --border2: #d8d8d0; --text: #1a1a1a;
-    --muted: #888880; --muted2: #555550; --accent: #2563eb;
-    --accent-bg: #eff6ff; --green: #16a34a; --green-bg: #f0fdf4;
-    --amber: #d97706; --amber-bg: #fffbeb; --red: #dc2626;
-    --red-bg: #fef2f2; --purple: #7c3aed; --purple-bg: #f5f3ff;
+    --bg:#f5f5f0;--surface:#fff;--surface2:#f9f9f6;--border:#e8e8e2;--border2:#d8d8d0;
+    --text:#1a1a1a;--muted:#888880;--muted2:#555550;--accent:#2563eb;--accent-bg:#eff6ff;
+    --green:#16a34a;--green-bg:#f0fdf4;--amber:#d97706;--amber-bg:#fffbeb;
+    --red:#dc2626;--red-bg:#fef2f2;--purple:#7c3aed;--purple-bg:#f5f3ff;
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:var(--bg); color:var(--text); font-family:'Syne',sans-serif; min-height:100vh; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;}
 
-  nav {
-    position:fixed; top:0; left:0; right:0; z-index:100;
-    background:rgba(255,255,255,0.92); backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--border);
-    display:flex; align-items:center; justify-content:space-between;
-    padding:0 2rem; height:56px;
-  }
-  .nav-brand { display:flex; align-items:center; gap:10px; }
-  .nav-logo { width:30px; height:30px; background:var(--accent); border-radius:8px; display:flex; align-items:center; justify-content:center; }
-  .nav-logo span { font-size:14px; font-weight:800; color:#fff; }
-  .nav-title { font-size:14px; font-weight:700; color:var(--text); }
-  .nav-sub { font-size:11px; color:var(--muted); font-family:'DM Mono',monospace; }
-  .nav-tabs { display:flex; gap:2px; }
-  .nav-tab { padding:6px 16px; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; border:none; background:transparent; color:var(--muted); transition:all 0.15s; font-family:'Syne',sans-serif; }
-  .nav-tab:hover { color:var(--text); background:var(--surface2); }
-  .nav-tab.active { background:var(--accent); color:#fff; }
-  .nav-date { font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); }
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:56px;}
+  .nav-brand{display:flex;align-items:center;gap:10px;}
+  .nav-logo{width:30px;height:30px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;}
+  .nav-logo span{font-size:14px;font-weight:800;color:#fff;}
+  .nav-title{font-size:14px;font-weight:700;}
+  .nav-sub{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;}
+  .nav-tabs{display:flex;gap:2px;}
+  .nav-tab{padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--muted);font-family:'Syne',sans-serif;transition:all 0.15s;}
+  .nav-tab:hover{color:var(--text);background:var(--surface2);}
+  .nav-tab.active{background:var(--accent);color:#fff;}
+  .nav-date{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);}
 
-  .page { display:none; padding:76px 2rem 3rem; max-width:1100px; margin:0 auto; }
-  .page.active { display:block; }
+  .page{display:none;padding:76px 2rem 3rem;max-width:1140px;margin:0 auto;}
+  .page.active{display:block;}
 
-  .hero { padding:2.5rem 0 2rem; border-bottom:1px solid var(--border); margin-bottom:2rem; }
-  .hero-tag { font-family:'DM Mono',monospace; font-size:11px; color:var(--accent); letter-spacing:0.08em; margin-bottom:0.75rem; }
-  .hero-title { font-size:40px; font-weight:800; line-height:1.1; margin-bottom:0.75rem; }
-  .hero-title span { color:var(--accent); }
-  .hero-sub { font-size:14px; color:var(--muted2); max-width:560px; line-height:1.6; }
+  .hero{padding:2.5rem 0 2rem;border-bottom:1px solid var(--border);margin-bottom:2rem;}
+  .hero-tag{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:0.08em;margin-bottom:.75rem;}
+  .hero-title{font-size:38px;font-weight:800;line-height:1.1;margin-bottom:.75rem;}
+  .hero-title span{color:var(--accent);}
+  .hero-sub{font-size:14px;color:var(--muted2);max-width:560px;line-height:1.6;}
 
-  .stat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:2rem; }
-  .stat-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:1.25rem; }
-  .stat-label { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:0.08em; margin-bottom:6px; }
-  .stat-value { font-size:28px; font-weight:800; color:var(--text); }
-  .stat-value.green { color:var(--green); }
-  .stat-value.accent { color:var(--accent); }
-  .stat-value.amber { color:var(--amber); }
-  .stat-delta { font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); margin-top:5px; }
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:2rem;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem;}
+  .stat-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.08em;margin-bottom:6px;}
+  .stat-value{font-size:28px;font-weight:800;}
+  .stat-value.green{color:var(--green);}
+  .stat-value.accent{color:var(--accent);}
+  .stat-value.amber{color:var(--amber);}
+  .stat-delta{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-top:5px;}
 
-  .section-title { font-size:11px; font-weight:700; letter-spacing:0.08em; color:var(--muted); margin-bottom:1rem; text-transform:uppercase; font-family:'DM Mono',monospace; }
+  .section-title{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);margin-bottom:1rem;text-transform:uppercase;font-family:'DM Mono',monospace;}
 
-  .apps-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:2rem; }
-  .app-tile { background:var(--surface); border:1.5px solid var(--border); border-radius:16px; padding:1.25rem; transition:all 0.18s; position:relative; overflow:hidden; }
-  .app-tile:hover { border-color:var(--accent); box-shadow:0 4px 20px rgba(37,99,235,0.08); transform:translateY(-2px); }
-  .app-tile.active-tile { border-color:var(--accent); background:var(--accent-bg); }
-  .tile-top { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:10px; }
-  .tile-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
-  .icon-blue { background:var(--accent-bg); }
-  .icon-green { background:var(--green-bg); }
-  .icon-purple { background:var(--purple-bg); }
-  .icon-amber { background:var(--amber-bg); }
-  .tile-status { font-family:'DM Mono',monospace; font-size:10px; padding:3px 8px; border-radius:6px; font-weight:500; }
-  .status-building { background:var(--amber-bg); color:var(--amber); }
-  .status-planned { background:var(--surface2); color:var(--muted); }
-  .status-live { background:var(--green-bg); color:var(--green); }
-  .tile-name { font-size:16px; font-weight:700; margin-bottom:4px; color:var(--text); }
-  .tile-niche { font-size:12px; color:var(--muted2); line-height:1.5; margin-bottom:10px; }
-  .tile-why { font-size:12px; color:var(--accent); font-weight:600; margin-bottom:12px; line-height:1.4; }
-  .tile-meta { display:flex; gap:6px; flex-wrap:wrap; }
-  .pill { font-family:'DM Mono',monospace; font-size:10px; padding:3px 8px; border-radius:6px; }
-  .pill-price { background:var(--accent-bg); color:var(--accent); }
-  .pill-effort { background:var(--purple-bg); color:var(--purple); }
-  .pill-market { background:var(--green-bg); color:var(--green); }
-  .tile-progress { margin-top:12px; }
-  .progress-label { display:flex; justify-content:space-between; font-size:11px; color:var(--muted); margin-bottom:5px; font-family:'DM Mono',monospace; }
-  .progress-bar { height:4px; background:var(--border); border-radius:99px; overflow:hidden; }
-  .progress-fill { height:100%; border-radius:99px; background:var(--accent); }
+  /* PIPELINE TABLE */
+  .pipeline-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:2rem;}
+  .pipeline-table{width:100%;border-collapse:collapse;}
+  .pipeline-table thead tr{background:var(--surface2);}
+  .pipeline-table th{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);padding:10px 16px;text-align:left;border-bottom:1px solid var(--border);letter-spacing:.06em;}
+  .pipeline-table td{padding:12px 16px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle;}
+  .pipeline-table tr:last-child td{border-bottom:none;}
+  .pipeline-table .app-row{cursor:pointer;transition:background .12s;}
+  .pipeline-table .app-row:hover td{background:var(--accent-bg);}
+  .pipeline-table .app-row.active-row td{background:var(--accent-bg);border-left:3px solid var(--accent);}
+  .app-name-cell{font-weight:700;color:var(--text);}
+  .app-icon-name{display:flex;align-items:center;gap:10px;}
+  .app-emoji{font-size:20px;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .bg-blue{background:var(--accent-bg);}
+  .bg-green{background:var(--green-bg);}
+  .bg-purple{background:var(--purple-bg);}
+  .bg-amber{background:var(--amber-bg);}
+  .status-pill{font-family:'DM Mono',monospace;font-size:10px;padding:3px 8px;border-radius:6px;font-weight:500;white-space:nowrap;}
+  .s-building{background:var(--amber-bg);color:var(--amber);}
+  .s-planned{background:var(--surface2);color:var(--muted);}
+  .s-live{background:var(--green-bg);color:var(--green);}
+  .progress-mini{display:flex;align-items:center;gap:8px;}
+  .progress-mini-bar{width:60px;height:4px;background:var(--border);border-radius:99px;overflow:hidden;}
+  .progress-mini-fill{height:100%;border-radius:99px;background:var(--accent);}
+  .progress-mini-pct{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);}
+  .expand-btn{font-size:16px;color:var(--muted);transition:transform .2s;display:inline-block;}
+  .app-row.active-row .expand-btn{transform:rotate(90deg);color:var(--accent);}
 
-  /* KILLED SECTION */
-  .killed-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:2rem; }
-  .killed-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1rem; opacity:0.6; }
-  .killed-name { font-size:13px; font-weight:700; color:var(--muted2); margin-bottom:4px; text-decoration:line-through; }
-  .killed-reason { font-size:11px; color:var(--muted); line-height:1.5; }
+  /* DETAIL PANEL */
+  .detail-row{display:none;}
+  .detail-row.open{display:table-row;}
+  .detail-panel{padding:0 16px 20px;background:var(--accent-bg);}
+  .detail-inner{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+  .detail-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface2);}
+  .detail-tab{padding:10px 18px;font-size:12px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--muted);font-family:'Syne',sans-serif;border-bottom:2px solid transparent;transition:all .15s;}
+  .detail-tab:hover{color:var(--text);}
+  .detail-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .detail-content{padding:1.5rem;}
+  .detail-section{display:none;}
+  .detail-section.active{display:block;}
 
-  /* STRATEGY */
-  .strategy-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:1.5rem; margin-bottom:1rem; }
-  .strategy-title { font-size:14px; font-weight:700; color:var(--text); margin-bottom:8px; }
-  .strategy-body { font-size:13px; color:var(--muted2); line-height:1.8; }
-  .strategy-body strong { color:var(--text); }
+  /* COMPETITOR CARDS */
+  .comp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem;}
+  .comp-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:1rem;}
+  .comp-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px;}
+  .comp-price{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);margin-bottom:8px;}
+  .comp-gap{font-size:12px;color:var(--muted2);line-height:1.5;}
+  .comp-reviews{margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
+  .comp-review-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.06em;margin-bottom:4px;}
+  .comp-review-text{font-size:11px;color:var(--red);font-style:italic;line-height:1.5;}
+
+  /* FEATURES */
+  .features-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem;}
+  .features-col{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:1rem;}
+  .features-col-title{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;font-family:'DM Mono',monospace;}
+  .feature-item{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--muted2);line-height:1.5;margin-bottom:6px;}
+  .feature-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+  .dot-green{background:var(--green);}
+  .dot-accent{background:var(--accent);}
+  .dot-red{background:var(--red);}
+
+  /* TARGET */
+  .target-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem;}
+  .target-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:1rem;}
+  .target-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.06em;margin-bottom:6px;}
+  .target-val{font-size:13px;color:var(--text);line-height:1.6;font-weight:500;}
+  .target-sub{font-size:12px;color:var(--muted2);margin-top:3px;line-height:1.5;}
+
+  /* ASO */
+  .aso-block{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:10px;}
+  .aso-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.06em;margin-bottom:5px;}
+  .aso-val{font-size:13px;color:var(--text);font-weight:600;}
+  .kw-chip{font-family:'DM Mono',monospace;font-size:11px;padding:3px 9px;background:var(--accent-bg);color:var(--accent);border-radius:6px;display:inline-block;margin:3px;}
+
+  /* KILLED */
+  .killed-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:2rem;}
+  .killed-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.9rem;opacity:.55;}
+  .killed-name{font-size:13px;font-weight:700;color:var(--muted2);margin-bottom:4px;text-decoration:line-through;}
+  .killed-reason{font-size:11px;color:var(--muted);line-height:1.5;}
 
   /* PLAYBOOK */
-  .phases-wrap { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:2rem; }
-  .phase-item { border-bottom:1px solid var(--border); }
-  .phase-item:last-child { border-bottom:none; }
-  .phase-header { display:flex; align-items:center; gap:1rem; padding:1.1rem 1.5rem; cursor:pointer; transition:background 0.12s; }
-  .phase-header:hover { background:var(--surface2); }
-  .phase-num { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); min-width:55px; }
-  .phase-name { font-size:14px; font-weight:700; flex:1; color:var(--text); }
-  .phase-time { font-family:'DM Mono',monospace; font-size:11px; color:var(--accent); }
-  .phase-toggle { font-size:18px; color:var(--muted); transition:transform 0.2s; width:24px; text-align:center; }
-  .phase-body { display:none; padding:0 1.5rem 1.25rem; }
-  .phase-body.open { display:block; }
-  .phase-item.expanded .phase-toggle { transform:rotate(45deg); }
-  .checklist { list-style:none; display:flex; flex-direction:column; gap:8px; }
-  .checklist li { display:flex; align-items:flex-start; gap:10px; font-size:13px; color:var(--muted2); line-height:1.5; }
-  .check-icon { width:18px; height:18px; border:1.5px solid var(--border2); border-radius:5px; flex-shrink:0; margin-top:1px; }
+  .phases-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:2rem;}
+  .phase-item{border-bottom:1px solid var(--border);}
+  .phase-item:last-child{border-bottom:none;}
+  .phase-header{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.5rem;cursor:pointer;transition:background .12s;}
+  .phase-header:hover{background:var(--surface2);}
+  .phase-num{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);min-width:55px;}
+  .phase-name{font-size:14px;font-weight:700;flex:1;}
+  .phase-time{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);}
+  .phase-toggle{font-size:18px;color:var(--muted);transition:transform .2s;width:24px;text-align:center;}
+  .phase-body{display:none;padding:0 1.5rem 1.25rem;}
+  .phase-body.open{display:block;}
+  .phase-item.expanded .phase-toggle{transform:rotate(45deg);}
+  .checklist{list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .checklist li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--muted2);line-height:1.5;}
+  .check-icon{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:5px;flex-shrink:0;margin-top:1px;}
 
   /* TRACKER */
-  .tracker-tabs { display:flex; gap:6px; margin-bottom:1.5rem; flex-wrap:wrap; }
-  .tracker-tab { padding:7px 16px; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; border:1.5px solid var(--border); background:var(--surface); color:var(--muted); transition:all 0.15s; font-family:'Syne',sans-serif; }
-  .tracker-tab:hover { border-color:var(--border2); color:var(--text); }
-  .tracker-tab.active { border-color:var(--accent); color:var(--accent); background:var(--accent-bg); }
-  .tracker-panel { display:none; }
-  .tracker-panel.active { display:block; }
-  .metrics-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:1.5rem; }
-  .metric-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1rem; }
-  .metric-label { font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); letter-spacing:0.08em; margin-bottom:6px; }
-  .metric-val { font-size:22px; font-weight:800; color:var(--text); }
-  .metric-val.green { color:var(--green); }
-  .metric-val.accent { color:var(--accent); }
-  .metric-val.pending { color:var(--muted); }
-  .table-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:1.5rem; }
-  .weekly-table { width:100%; border-collapse:collapse; }
-  .weekly-table th { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); padding:10px 14px; text-align:left; border-bottom:1px solid var(--border); background:var(--surface2); }
-  .weekly-table td { padding:10px 14px; border-bottom:1px solid var(--border); font-size:13px; font-family:'DM Mono',monospace; color:var(--muted); }
-  .weekly-table tr:last-child td { border-bottom:none; }
-  .weekly-table .current-week td { color:var(--text); background:var(--accent-bg); }
-  .empty-val { color:var(--border2) !important; }
+  .tracker-tabs{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap;}
+  .tracker-tab{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);font-family:'Syne',sans-serif;transition:all .15s;}
+  .tracker-tab:hover{border-color:var(--border2);color:var(--text);}
+  .tracker-tab.active{border-color:var(--accent);color:var(--accent);background:var(--accent-bg);}
+  .tracker-panel{display:none;}
+  .tracker-panel.active{display:block;}
+  .metrics-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:1.5rem;}
+  .metric-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;}
+  .metric-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.08em;margin-bottom:6px;}
+  .metric-val{font-size:22px;font-weight:800;}
+  .metric-val.green{color:var(--green);}
+  .metric-val.accent{color:var(--accent);}
+  .metric-val.pending{color:var(--muted);}
+  .table-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:1.5rem;}
+  .weekly-table{width:100%;border-collapse:collapse;}
+  .weekly-table th{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);background:var(--surface2);}
+  .weekly-table td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;font-family:'DM Mono',monospace;color:var(--muted);}
+  .weekly-table tr:last-child td{border-bottom:none;}
+  .weekly-table .current-week td{color:var(--text);background:var(--accent-bg);}
+  .empty-val{color:var(--border2)!important;}
 
   /* CREATORS */
-  .template-box { background:var(--surface2); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:10px; padding:1.25rem; font-size:13px; line-height:1.8; color:var(--muted2); white-space:pre-wrap; font-family:'DM Mono',monospace; }
-  .template-box mark { background:var(--accent-bg); color:var(--accent); border-radius:3px; padding:0 3px; }
-  .kw-chip { font-family:'DM Mono',monospace; font-size:11px; padding:3px 9px; background:var(--accent-bg); color:var(--accent); border-radius:6px; display:inline-block; margin:3px; }
-  .info-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.25rem; margin-bottom:1rem; }
-  .info-card-title { font-size:12px; font-weight:700; color:var(--text); margin-bottom:8px; }
-  .info-card-body { font-size:13px; color:var(--muted2); line-height:1.8; }
-  .empty-state { padding:3rem; text-align:center; color:var(--muted); border:1.5px dashed var(--border2); border-radius:14px; background:var(--surface); }
+  .template-box{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:1.25rem;font-size:13px;line-height:1.8;color:var(--muted2);white-space:pre-wrap;font-family:'DM Mono',monospace;}
+  .template-box mark{background:var(--accent-bg);color:var(--accent);border-radius:3px;padding:0 3px;}
+  .info-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem;}
+  .info-card-title{font-size:12px;font-weight:700;margin-bottom:8px;}
+  .info-card-body{font-size:13px;color:var(--muted2);line-height:1.8;}
+  .creator-table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:1.5rem;}
+  .creator-table{width:100%;border-collapse:collapse;}
+  .creator-table th{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);background:var(--surface2);}
+  .creator-table td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:12px;color:var(--muted2);}
+  .creator-table tr:last-child td{border-bottom:none;}
+  .empty-state{padding:3rem;text-align:center;color:var(--muted);border:1.5px dashed var(--border2);border-radius:14px;background:var(--surface);}
 
-  .table-wrap { background:var(--surface); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
-  .data-table { width:100%; border-collapse:collapse; }
-  .data-table th { font-family:'DM Mono',monospace; font-size:10px; color:var(--muted); text-align:left; padding:10px 14px; border-bottom:1px solid var(--border); background:var(--surface2); }
-  .data-table td { padding:10px 14px; border-bottom:1px solid var(--border); font-size:13px; color:var(--text); }
-  .data-table tr:last-child td { border-bottom:none; }
-  .data-table tr:hover td { background:var(--surface2); }
-  .tier-badge { font-size:10px; padding:2px 7px; border-radius:5px; font-family:'DM Mono',monospace; font-weight:500; }
-  .t1 { background:var(--green-bg); color:var(--green); }
-  .killed-badge { font-size:10px; padding:2px 7px; border-radius:5px; font-family:'DM Mono',monospace; background:var(--red-bg); color:var(--red); }
+  .page-footer{border-top:1px solid var(--border);margin-top:3rem;padding-top:1.5rem;display:flex;justify-content:space-between;}
+  .footer-text{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);}
 
-  .page-footer { border-top:1px solid var(--border); margin-top:3rem; padding-top:1.5rem; display:flex; justify-content:space-between; }
-  .footer-text { font-family:'DM Mono',monospace; font-size:11px; color:var(--muted); }
-
-  @media(max-width:768px) {
-    .stat-grid,.apps-grid,.metrics-grid,.killed-grid { grid-template-columns:repeat(2,1fr); }
-    .hero-title { font-size:28px; }
-    nav { padding:0 1rem; }
-    .page { padding:68px 1rem 2rem; }
+  @media(max-width:768px){
+    .stat-grid,.comp-grid,.target-grid,.killed-grid,.features-grid{grid-template-columns:repeat(2,1fr);}
+    .hero-title{font-size:26px;}
+    nav{padding:0 1rem;}
+    .page{padding:68px 1rem 2rem;}
   }
 </style>
 </head>
@@ -175,7 +202,6 @@
   </div>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showPage('overview',this)">Overview</button>
-    <button class="nav-tab" onclick="showPage('strategy',this)">Strategy</button>
     <button class="nav-tab" onclick="showPage('playbook',this)">Playbook</button>
     <button class="nav-tab" onclick="showPage('tracker',this)">Tracker</button>
     <button class="nav-tab" onclick="showPage('creators',this)">Creators</button>
@@ -183,400 +209,668 @@
   <div class="nav-date" id="nav-date"></div>
 </nav>
 
-<!-- ======= OVERVIEW ======= -->
+<!-- ============ OVERVIEW ============ -->
 <div class="page active" id="page-overview">
   <div class="hero">
     <div class="hero-tag">// SOLSYSTEMS APP STUDIO · JUNE 2026</div>
     <h1 class="hero-title">Find it. Adopt it.<br><span>Ship it better.</span></h1>
-    <p class="hero-sub">Competitors already validated the market. We study what's working, find the gap in reviews, build a sharper version, and ship faster. The bottleneck is never building — it's always the right audience.</p>
+    <p class="hero-sub">Competitors validated the market. We study their reviews, find the gap, build a sharper version. Click any app below to open the full intelligence brief.</p>
   </div>
 
   <div class="stat-grid">
-    <div class="stat-card">
-      <div class="stat-label">ACTIVE PIPELINE</div>
-      <div class="stat-value accent">4</div>
-      <div class="stat-delta">Down from 15 — brutal cut</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">CURRENT MRR</div>
-      <div class="stat-value green">$0</div>
-      <div class="stat-delta">Target: $5,000/mo</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">LIVE APPS</div>
-      <div class="stat-value amber">0</div>
-      <div class="stat-delta">KidLearn → next</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">DECEMBER TARGET</div>
-      <div class="stat-value">500</div>
-      <div class="stat-delta">subscribers @ $10/mo avg</div>
-    </div>
+    <div class="stat-card"><div class="stat-label">ACTIVE PIPELINE</div><div class="stat-value accent">4</div><div class="stat-delta">Brutal cut from 15</div></div>
+    <div class="stat-card"><div class="stat-label">CURRENT MRR</div><div class="stat-value green">$0</div><div class="stat-delta">Target: $5,000/mo</div></div>
+    <div class="stat-card"><div class="stat-label">LIVE APPS</div><div class="stat-value amber">0</div><div class="stat-delta">KidLearn → next</div></div>
+    <div class="stat-card"><div class="stat-label">DECEMBER TARGET</div><div class="stat-value">500</div><div class="stat-delta">subscribers @ $10/mo avg</div></div>
   </div>
 
-  <div class="section-title">Active Pipeline — 4 Validated Ideas</div>
-  <div class="apps-grid">
-    <div class="app-tile active-tile">
-      <div class="tile-top">
-        <div class="tile-icon icon-blue">🦜</div>
-        <span class="tile-status status-building">Building</span>
-      </div>
-      <div class="tile-name">KidLearn ESL</div>
-      <div class="tile-niche">English for ESL preschoolers · Arabic, Spanish, French variants from one codebase</div>
-      <div class="tile-why">Gap: No competitor targets Arabic/Spanish/French ESL families specifically. Duolingo Kids has no Arabic UI.</div>
-      <div class="tile-meta">
-        <span class="pill pill-price">$9–12/mo</span>
-        <span class="pill pill-effort">Hours to ship</span>
-        <span class="pill pill-market">$2.5B market</span>
-      </div>
-      <div class="tile-progress">
-        <div class="progress-label"><span>Build progress</span><span>65%</span></div>
-        <div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div>
-      </div>
-    </div>
-
-    <div class="app-tile">
-      <div class="tile-top">
-        <div class="tile-icon icon-green">📚</div>
-        <span class="tile-status status-planned">Planned</span>
-      </div>
-      <div class="tile-name">Homeschool Daily Scheduler</div>
-      <div class="tile-niche">Mobile-first daily planner for 3.7M US homeschool families</div>
-      <div class="tile-why">Gap: All competitors are desktop-web-first and clunky on mobile. Uschool reviews say "lacks scheduling features." No dominant native mobile app.</div>
-      <div class="tile-meta">
-        <span class="pill pill-price">$8–12/mo</span>
-        <span class="pill pill-effort">3–5 days</span>
-        <span class="pill pill-market">3.7M homeschoolers</span>
-      </div>
-      <div class="tile-progress">
-        <div class="progress-label"><span>Build progress</span><span>0%</span></div>
-        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-      </div>
-    </div>
-
-    <div class="app-tile">
-      <div class="tile-top">
-        <div class="tile-icon icon-purple">⚡</div>
-        <span class="tile-status status-planned">Planned</span>
-      </div>
-      <div class="tile-name">ADHD Morning Routine</div>
-      <div class="tile-niche">Dead-simple dopamine-loop morning routine for ADHD adults</div>
-      <div class="tile-why">Gap: Tiimo ($12.99/mo) and Inflow ($22.49/mo) are overpriced and complex. Build the $8–10/mo version — 5 tasks, streaks, celebrations. Nothing more.</div>
-      <div class="tile-meta">
-        <span class="pill pill-price">$8–10/mo</span>
-        <span class="pill pill-effort">3–4 days</span>
-        <span class="pill pill-market">TikTok #ADHD huge</span>
-      </div>
-      <div class="tile-progress">
-        <div class="progress-label"><span>Build progress</span><span>0%</span></div>
-        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-      </div>
-    </div>
-
-    <div class="app-tile">
-      <div class="tile-top">
-        <div class="tile-icon icon-amber">🐾</div>
-        <span class="tile-status status-planned">Planned</span>
-      </div>
-      <div class="tile-name">Pet Medication Tracker</div>
-      <div class="tile-niche">Multi-pet medication reminders, vet notes, family sharing</div>
-      <div class="tile-why">Gap: No dominant app. PetTimely is early stage. Reviews say "hard to edit meds", "no family sharing". Easiest build on the list — hours not days.</div>
-      <div class="tile-meta">
-        <span class="pill pill-price">$5–8/mo</span>
-        <span class="pill pill-effort">Hours to build</span>
-        <span class="pill pill-market">$2.8B market 15% CAGR</span>
-      </div>
-      <div class="tile-progress">
-        <div class="progress-label"><span>Build progress</span><span>0%</span></div>
-        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-title">Cut from Pipeline — 11 Ideas Killed</div>
-  <div class="killed-grid">
-    <div class="killed-card">
-      <div class="killed-name">Stoic Daily Journal</div>
-      <div class="killed-reason">Market leader has 4M users + Apple Award. Gap is gone.</div>
-    </div>
-    <div class="killed-card">
-      <div class="killed-name">Bar Exam Flashcards</div>
-      <div class="killed-reason">Content moat, not UX moat. Quimbee acquired by BARBRI 2025.</div>
-    </div>
-    <div class="killed-card">
-      <div class="killed-name">Box Breathing — First Responders</div>
-      <div class="killed-reason">Real buyer is institutions (B2B). Wrong model for indie.</div>
-    </div>
-    <div class="killed-card">
-      <div class="killed-name">Golf Handicap Tracker</div>
-      <div class="killed-reason">GHIN is free and official. Can't compete.</div>
-    </div>
-    <div class="killed-card">
-      <div class="killed-name">Freelancer Invoice + Tax</div>
-      <div class="killed-reason">Wave is free and trusted. Financial trust takes years.</div>
-    </div>
-    <div class="killed-card">
-      <div class="killed-name">Ramadan Tracker</div>
-      <div class="killed-reason">Seasonal — 1 month/year. Can't build MRR.</div>
-    </div>
-    <div class="killed-card">
-      <div class="killed-name">Wedding Budget Tracker</div>
-      <div class="killed-reason">One-time event. Guaranteed churn in 6 months.</div>
-    </div>
-    <div class="killed-card">
-      <div class="killed-name">Nurse Shift Planner</div>
-      <div class="killed-reason">Gap narrowing fast. NurseGrid and Nursly improving rapidly.</div>
-    </div>
-    <div class="killed-card">
-      <div class="killed-name">Carnivore Diet Tracker</div>
-      <div class="killed-reason">Parked. Food database problem blocks fast build. Revisit after KidLearn.</div>
-    </div>
-    <div class="killed-card">
-      <div class="killed-name">KidLearn Arabic/Spanish/French</div>
-      <div class="killed-reason">Not killed — folded into KidLearn ESL as locale variants.</div>
-    </div>
-    <div class="killed-card">
-      <div class="killed-name">Homeschool AI (Homer, Starfall)</div>
-      <div class="killed-reason">Folded into Homeschool Daily Scheduler.</div>
-    </div>
-  </div>
-
-  <div class="page-footer">
-    <span class="footer-text">Solsystems App Studio · Ram · Hyderabad, India</span>
-    <span class="footer-text">Updated: <span id="footer-date"></span></span>
-  </div>
-</div>
-
-<!-- ======= STRATEGY ======= -->
-<div class="page" id="page-strategy">
-  <div class="hero" style="padding-top:2rem;">
-    <div class="hero-tag">// THE STRATEGY</div>
-    <h1 class="hero-title" style="font-size:34px;">Competitors tested<br><span>the waters for us.</span></h1>
-  </div>
-
-  <div class="strategy-card">
-    <div class="strategy-title">The core insight</div>
-    <div class="strategy-body">
-      Don't build from the ground up. <strong>Find apps already making money in niche markets</strong>, study what's working, find the gap in 1-star and 3-star reviews, build a sharper focused version faster. Competitors already validated the market — no need to repeat that. Pick emerging proven ideas, adopt and improve.
-    </div>
-  </div>
-
-  <div class="strategy-card">
-    <div class="strategy-title">How we pick an idea</div>
-    <div class="strategy-body">
-      <strong>1. Proven paying market</strong> — competitor is making real money (not just downloads)<br>
-      <strong>2. Bad reviews reveal the gap</strong> — 1-star and 3-star reviews are the roadmap<br>
-      <strong>3. No free dominant alternative</strong> — Wave kills invoice apps, GHIN kills golf apps<br>
-      <strong>4. Recurring daily need</strong> — retention requires a habit, not a one-time event<br>
-      <strong>5. Creator acquisition path</strong> — a niche community exists on Instagram or TikTok<br>
-      <strong>6. Fast build</strong> — hours to days with AI assistance, not weeks
-    </div>
-  </div>
-
-  <div class="strategy-card">
-    <div class="strategy-title">What we killed and why</div>
-    <div class="strategy-body">
-      <strong>Stoic Journal</strong> — market validated, but gap gone (4M users, Apple award winner)<br>
-      <strong>Bar Exam</strong> — content moat not UX moat. Can't build the legal library.<br>
-      <strong>Box Breathing</strong> — real buyer is institutions, not consumers. Wrong model.<br>
-      <strong>Golf</strong> — GHIN is free and official. Can't beat a government system.<br>
-      <strong>Invoice/Tax</strong> — Wave is free. Financial trust takes years. Wrong terrain.<br>
-      <strong>Ramadan/Wedding</strong> — seasonal or one-time. Can't build MRR on them.<br>
-      <strong>Nurse Shift</strong> — gap narrowing fast. Moved to watch list.<br>
-      <strong>Carnivore</strong> — parked. Food database is a real scope problem. Revisit post-KidLearn.
-    </div>
-  </div>
-
-  <div class="strategy-card">
-    <div class="strategy-title">Revenue target</div>
-    <div class="strategy-body">
-      <strong>$5,000 MRR by December 2026</strong><br>
-      Path: 4 apps × ~125 subscribers each at $10/month<br>
-      Stretch: 1 breakout at 500+ subscribers = $5,000 MRR solo<br><br>
-      Apple Developer account committed ($99/yr). This is a real launch, not an experiment.
-    </div>
-  </div>
-
-  <div class="section-title">Pipeline decision framework</div>
-  <div class="table-wrap">
-    <table class="data-table">
+  <div class="section-title">Active Pipeline — Click a row to open intelligence brief</div>
+  <div class="pipeline-wrap">
+    <table class="pipeline-table">
       <thead>
-        <tr><th>CRITERION</th><th>KIDLEARN</th><th>HOMESCHOOL</th><th>ADHD ROUTINE</th><th>PET MEDS</th></tr>
+        <tr>
+          <th>APP</th><th>STATUS</th><th>PRICE</th><th>MARKET SIZE</th><th>BUILD</th><th>OUR EDGE</th><th></th>
+        </tr>
       </thead>
       <tbody>
-        <tr><td>Proven paying market</td><td>✅ $2.5B</td><td>✅ $69–95/yr competitors</td><td>✅ $22/mo Inflow</td><td>✅ $2.8B market</td></tr>
-        <tr><td>Gap in competitor reviews</td><td>✅ No Arabic ESL</td><td>✅ No mobile-first</td><td>✅ Too complex/costly</td><td>✅ Can't edit meds</td></tr>
-        <tr><td>No free dominant alternative</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
-        <tr><td>Recurring daily need</td><td>✅ Daily learning</td><td>✅ Daily scheduling</td><td>✅ Daily habit</td><td>✅ Daily meds</td></tr>
-        <tr><td>Creator acquisition path</td><td>✅ #arabicmom #spanishmom</td><td>✅ #homeschoolmom</td><td>✅ #ADHDTikTok</td><td>✅ #petmom</td></tr>
-        <tr><td>Build time</td><td>✅ Hours (65% done)</td><td>✅ 3–5 days</td><td>✅ 3–4 days</td><td>✅ Hours</td></tr>
+        <!-- ROW 1: KidLearn -->
+        <tr class="app-row" id="row-kidlearn" onclick="toggleDetail('kidlearn')">
+          <td>
+            <div class="app-icon-name">
+              <div class="app-emoji bg-blue">🦜</div>
+              <div>
+                <div class="app-name-cell">KidLearn ESL</div>
+                <div style="font-size:11px;color:var(--muted);">Arabic · Spanish · French variants</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="status-pill s-building">Building</span></td>
+          <td style="font-family:'DM Mono',monospace;font-size:12px;">$9–12/mo</td>
+          <td style="font-family:'DM Mono',monospace;font-size:12px;">$2.5B</td>
+          <td>
+            <div class="progress-mini">
+              <div class="progress-mini-bar"><div class="progress-mini-fill" style="width:65%"></div></div>
+              <span class="progress-mini-pct">65%</span>
+            </div>
+          </td>
+          <td style="font-size:12px;color:var(--muted2);">No Arabic/Spanish ESL app exists</td>
+          <td><span class="expand-btn">›</span></td>
+        </tr>
+        <tr class="detail-row" id="detail-kidlearn">
+          <td colspan="7" style="padding:0;">
+            <div class="detail-panel">
+              <div class="detail-inner">
+                <div class="detail-tabs">
+                  <button class="detail-tab active" onclick="showDetailTab('kidlearn','competitors',this)">Competitors</button>
+                  <button class="detail-tab" onclick="showDetailTab('kidlearn','features',this)">Features to Build</button>
+                  <button class="detail-tab" onclick="showDetailTab('kidlearn','target',this)">Target Customers</button>
+                  <button class="detail-tab" onclick="showDetailTab('kidlearn','aso',this)">ASO & Launch</button>
+                </div>
+                <div class="detail-content">
+
+                  <div class="detail-section active" id="kidlearn-competitors">
+                    <div class="comp-grid">
+                      <div class="comp-card">
+                        <div class="comp-name">Duolingo Kids</div>
+                        <div class="comp-price">Free (ad-supported)</div>
+                        <div class="comp-gap">Generic English — no Arabic UI, no ESL-family targeting, no offline mode. Gamified but not pedagogically grounded for preschoolers.</div>
+                        <div class="comp-reviews">
+                          <div class="comp-review-label">WHAT PARENTS SAY</div>
+                          <div class="comp-review-text">"Too many ads for kids." "No Arabic support." "My child just clicks randomly."</div>
+                        </div>
+                      </div>
+                      <div class="comp-card">
+                        <div class="comp-name">ABCmouse</div>
+                        <div class="comp-price">$13/month · $45/year</div>
+                        <div class="comp-gap">Huge content library but overwhelming. No ESL focus — assumes English-speaking home. No offline. No Arabic/Spanish parent UI.</div>
+                        <div class="comp-reviews">
+                          <div class="comp-review-label">WHAT PARENTS SAY</div>
+                          <div class="comp-review-text">"Too much content, my 3-yr-old gets lost." "No Arabic option." "Cancelled — not designed for ESL families."</div>
+                        </div>
+                      </div>
+                      <div class="comp-card">
+                        <div class="comp-name">DinoLingo</div>
+                        <div class="comp-price">$19.99/month · $119/year</div>
+                        <div class="comp-gap">Expensive, broad language offering. Has Arabic-to-English but not ESL focused. No spaced repetition. No adaptive learning. Passive video watching.</div>
+                        <div class="comp-reviews">
+                          <div class="comp-review-label">WHAT PARENTS SAY</div>
+                          <div class="comp-review-text">"Very expensive for what it is." "My child just watches, doesn't interact." "No progress tracking."</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="background:var(--green-bg);border:1px solid var(--green);border-radius:10px;padding:1rem;">
+                      <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:6px;">Our pricing strategy</div>
+                      <div style="font-size:13px;color:var(--muted2);line-height:1.7;">
+                        <strong>$9.99/month · $49.99/year</strong> — priced below ABCmouse ($13) and DinoLingo ($19.99).<br>
+                        Free tier: CAT word with all 3 activities (permanent). 3-day free trial on premium.<br>
+                        Future: $14.99/month AI Tutor Mode as premium+ upsell.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="detail-section" id="kidlearn-features">
+                    <div class="features-grid">
+                      <div class="features-col">
+                        <div class="features-col-title">✅ Already Built</div>
+                        <div class="feature-item"><div class="feature-dot dot-green"></div>Paint It, Spell It, Match It — all 3 activities working</div>
+                        <div class="feature-item"><div class="feature-dot dot-green"></div>SM-2 spaced repetition adaptive engine</div>
+                        <div class="feature-item"><div class="feature-dot dot-green"></div>Multi-profile support (up to 6 children)</div>
+                        <div class="feature-item"><div class="feature-dot dot-green"></div>Parent Zone dashboard with progress tracking</div>
+                        <div class="feature-item"><div class="feature-dot dot-green"></div>Kiki mascot with contextual audio feedback</div>
+                        <div class="feature-item"><div class="feature-dot dot-green"></div>Fully offline — no account, no login required</div>
+                        <div class="feature-item"><div class="feature-dot dot-green"></div>10-word bank with phonemic distractor logic</div>
+                        <div class="feature-item"><div class="feature-dot dot-green"></div>Daily plan generation (focus + 2 practice)</div>
+                      </div>
+                      <div class="features-col">
+                        <div class="features-col-title">🔨 Still to Build</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>RevenueCat subscription paywall (subscription.ts missing)</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Language layer — locale.ts (Arabic/Spanish/French parent UI)</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>PIN gate + time limit + sound toggle (parent controls)</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>App icon (1024×1024) + App Store screenshots</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Privacy policy at preschool.ai/privacy</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Capacitor iOS/Android packaging (after web testing)</div>
+                        <div class="feature-item"><div class="feature-dot dot-red"></div>Word bank expansion 10 → 50+ words (v2)</div>
+                        <div class="feature-item"><div class="feature-dot dot-red"></div>Custom Kiki illustration — emoji placeholder now (v2)</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="detail-section" id="kidlearn-target">
+                    <div class="target-grid">
+                      <div class="target-card">
+                        <div class="target-label">PRIMARY AUDIENCE</div>
+                        <div class="target-val">Arabic-speaking families</div>
+                        <div class="target-sub">1.4M Arabic speakers in USA. Median income $65K+. High education values. Detroit, NY, LA metros.</div>
+                      </div>
+                      <div class="target-card">
+                        <div class="target-label">SECONDARY AUDIENCE</div>
+                        <div class="target-val">Spanish-speaking families</div>
+                        <div class="target-sub">Largest ESL segment in USA. 41M Spanish speakers. Strong parental investment in English fluency.</div>
+                      </div>
+                      <div class="target-card">
+                        <div class="target-label">TERTIARY AUDIENCE</div>
+                        <div class="target-val">French-speaking families</div>
+                        <div class="target-sub">EU + Canada. African diaspora in France. Lower competition in App Store for this niche.</div>
+                      </div>
+                      <div class="target-card">
+                        <div class="target-label">CHILD AGE</div>
+                        <div class="target-val">3–6 years old</div>
+                        <div class="target-sub">Pre-reader. Learning through play, audio, and touch — zero text instructions for child.</div>
+                      </div>
+                      <div class="target-card">
+                        <div class="target-label">BUYER PERSONA</div>
+                        <div class="target-val">ESL Mom, 28–42</div>
+                        <div class="target-sub">Immigrant or first-gen. Wants child to be fluent in English before school. Active on Instagram and Facebook groups.</div>
+                      </div>
+                      <div class="target-card">
+                        <div class="target-label">CREATOR CHANNELS</div>
+                        <div class="target-val">#arabicmom #spanishmom</div>
+                        <div class="target-sub">#bilingualfamily #eslfamily #preschoolmom #toddlerlearning #montessorimom</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="detail-section" id="kidlearn-aso">
+                    <div class="aso-block"><div class="aso-label">APP TITLE (Arabic variant)</div><div class="aso-val">Arabic Kids English — ESL for Arabic Families</div></div>
+                    <div class="aso-block"><div class="aso-label">APP TITLE (Spanish variant)</div><div class="aso-val">Spanish Kids English — ESL for Latino Families</div></div>
+                    <div class="aso-block"><div class="aso-label">SUBTITLE</div><div class="aso-val">Learn English Words | Ages 3–6 | No Ads</div></div>
+                    <div class="aso-block">
+                      <div class="aso-label">KEYWORDS</div>
+                      <div style="margin-top:6px;">
+                        <span class="kw-chip">esl kids</span><span class="kw-chip">arabic english kids</span><span class="kw-chip">english preschool</span><span class="kw-chip">toddler learning</span><span class="kw-chip">bilingual preschool</span><span class="kw-chip">esl arabic</span><span class="kw-chip">spanish english kids</span><span class="kw-chip">kids vocabulary</span><span class="kw-chip">phonics app</span><span class="kw-chip">learn english</span>
+                      </div>
+                    </div>
+                    <div class="aso-block"><div class="aso-label">CATEGORY</div><div class="aso-val">Education (Primary) · Entertainment (Secondary)</div></div>
+                    <div class="aso-block"><div class="aso-label">LAUNCH SEQUENCE</div><div class="aso-val" style="font-weight:400;line-height:1.8;">1. Complete subscription.ts + Paywall.tsx → 2. Add locale.ts language layer → 3. Parent controls (PIN + time limit + sound) → 4. Web testing checklist → 5. Capacitor iOS packaging → 6. Submit App Store → 7. Creator outreach starts day of submission</div></div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ROW 2: Homeschool -->
+        <tr class="app-row" id="row-homeschool" onclick="toggleDetail('homeschool')">
+          <td>
+            <div class="app-icon-name">
+              <div class="app-emoji bg-green">📚</div>
+              <div>
+                <div class="app-name-cell">Homeschool Daily Scheduler</div>
+                <div style="font-size:11px;color:var(--muted);">Mobile-first · AI lesson plans</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="status-pill s-planned">Planned</span></td>
+          <td style="font-family:'DM Mono',monospace;font-size:12px;">$8–12/mo</td>
+          <td style="font-family:'DM Mono',monospace;font-size:12px;">3.7M US users</td>
+          <td>
+            <div class="progress-mini">
+              <div class="progress-mini-bar"><div class="progress-mini-fill" style="width:0%"></div></div>
+              <span class="progress-mini-pct">0%</span>
+            </div>
+          </td>
+          <td style="font-size:12px;color:var(--muted2);">No dominant native mobile app</td>
+          <td><span class="expand-btn">›</span></td>
+        </tr>
+        <tr class="detail-row" id="detail-homeschool">
+          <td colspan="7" style="padding:0;">
+            <div class="detail-panel">
+              <div class="detail-inner">
+                <div class="detail-tabs">
+                  <button class="detail-tab active" onclick="showDetailTab('homeschool','competitors',this)">Competitors</button>
+                  <button class="detail-tab" onclick="showDetailTab('homeschool','features',this)">Features to Build</button>
+                  <button class="detail-tab" onclick="showDetailTab('homeschool','target',this)">Target Customers</button>
+                  <button class="detail-tab" onclick="showDetailTab('homeschool','aso',this)">ASO & Launch</button>
+                </div>
+                <div class="detail-content">
+
+                  <div class="detail-section active" id="homeschool-competitors">
+                    <div class="comp-grid">
+                      <div class="comp-card">
+                        <div class="comp-name">Homeschool Planet</div>
+                        <div class="comp-price">$7.95/month · $69.95/year</div>
+                        <div class="comp-gap">30-year-old platform. Desktop-web-first — terrible on mobile. Complex setup. But paying users, proven market. 30-day free trial offered.</div>
+                        <div class="comp-reviews">
+                          <div class="comp-review-label">WHAT PARENTS SAY</div>
+                          <div class="comp-review-text">"Clunky on my phone." "Too hard to set up." "Too many features I don't use."</div>
+                        </div>
+                      </div>
+                      <div class="comp-card">
+                        <div class="comp-name">Uschool (AI Homeschool)</div>
+                        <div class="comp-price">~$10/month</div>
+                        <div class="comp-gap">Newer, getting good reviews. But users say "lacks scheduling features." Active development. Our window to move is now before they close the gap.</div>
+                        <div class="comp-reviews">
+                          <div class="comp-review-label">WHAT PARENTS SAY</div>
+                          <div class="comp-review-text">"Lacks scheduling features." "Worth $10/month easily." "I track attendance for state compliance — invaluable."</div>
+                        </div>
+                      </div>
+                      <div class="comp-card">
+                        <div class="comp-name">Homeschool Panda</div>
+                        <div class="comp-price">$8/month · $80/year</div>
+                        <div class="comp-gap">Feature-rich but overwhelming. Hundreds of curriculum schedules at extra cost ($6–10 each). Not mobile-native. Loyal base but hard to onboard.</div>
+                        <div class="comp-reviews">
+                          <div class="comp-review-label">WHAT PARENTS SAY</div>
+                          <div class="comp-review-text">"Setup is daunting." "Extra cost for curriculum plans is annoying." "Not great on phone."</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="background:var(--green-bg);border:1px solid var(--green);border-radius:10px;padding:1rem;">
+                      <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:6px;">Our pricing strategy</div>
+                      <div style="font-size:13px;color:var(--muted2);line-height:1.7;">
+                        <strong>$9.99/month · $49.99/year</strong> — in line with competitors. No extra charges for curriculum.<br>
+                        Free tier: 1 child, 1 week of scheduling. 14-day free trial on premium.<br>
+                        Differentiator: AI-generated lesson plans included in base price — not a paid add-on.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="detail-section" id="homeschool-features">
+                    <div class="features-grid">
+                      <div class="features-col">
+                        <div class="features-col-title">🔨 Core Features (v1)</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Daily schedule view — drag-and-drop subjects into time blocks</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Multi-child profiles with independent schedules</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>AI lesson plan generator — describe subject → get weekly plan</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Attendance tracker (required for state compliance)</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Progress tracking per subject per child</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Exportable attendance/progress report (PDF)</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Reminder notifications for daily schedule</div>
+                      </div>
+                      <div class="features-col">
+                        <div class="features-col-title">❌ Gaps to Fix from Competitor Reviews</div>
+                        <div class="feature-item"><div class="feature-dot dot-green"></div>Mobile-first UI — works great on iPhone/iPad, not desktop-afterthought</div>
+                        <div class="feature-item"><div class="feature-dot dot-green"></div>Simple onboarding — up and running in under 5 minutes</div>
+                        <div class="feature-item"><div class="feature-dot dot-green"></div>Curriculum schedules included free — not paid add-on</div>
+                        <div class="feature-item"><div class="feature-dot dot-green"></div>Scheduling features that Uschool is missing</div>
+                        <div class="feature-item"><div class="feature-dot dot-red"></div>No GPS course maps (not needed — different category)</div>
+                        <div class="feature-item"><div class="feature-dot dot-red"></div>No community/social features (v2)</div>
+                        <div class="feature-item"><div class="feature-dot dot-red"></div>No grade book (v2)</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="detail-section" id="homeschool-target">
+                    <div class="target-grid">
+                      <div class="target-card"><div class="target-label">MARKET SIZE</div><div class="target-val">3.7M students</div><div class="target-sub">US homeschoolers in 2024. Growing post-pandemic. Active community of sharing parents.</div></div>
+                      <div class="target-card"><div class="target-label">PRIMARY BUYER</div><div class="target-val">Homeschool Mom, 30–45</div><div class="target-sub">Manages 2–4 children's education. Overwhelmed by planning. Active in Facebook groups and Instagram.</div></div>
+                      <div class="target-card"><div class="target-label">PAIN POINT</div><div class="target-val">State compliance + planning</div><div class="target-sub">Many states require attendance records. Parents need proof of education. Attendance export = killer feature.</div></div>
+                      <div class="target-card"><div class="target-label">DEVICE</div><div class="target-val">iPhone + iPad</div><div class="target-sub">Homeschool moms manage on the go. Mobile-first is not optional — it's the entire differentiator.</div></div>
+                      <div class="target-card"><div class="target-label">WILLINGNESS TO PAY</div><div class="target-val">High — proven</div><div class="target-sub">Uschool users say $10/month is worth it. Homeschool Planet has paying users at $7.95/month for 30 years.</div></div>
+                      <div class="target-card"><div class="target-label">CREATOR CHANNELS</div><div class="target-val">#homeschoolmom</div><div class="target-sub">#homeschooling #homeschoolfamily #unschooling #homeschoollife #classicalhomeschool</div></div>
+                    </div>
+                  </div>
+
+                  <div class="detail-section" id="homeschool-aso">
+                    <div class="aso-block"><div class="aso-label">APP TITLE</div><div class="aso-val">Homeschool Planner — Daily Scheduler</div></div>
+                    <div class="aso-block"><div class="aso-label">SUBTITLE</div><div class="aso-val">Lessons, Attendance & AI Plans</div></div>
+                    <div class="aso-block"><div class="aso-label">KEYWORDS</div><div style="margin-top:6px;"><span class="kw-chip">homeschool planner</span><span class="kw-chip">homeschool scheduler</span><span class="kw-chip">lesson planner</span><span class="kw-chip">homeschool attendance</span><span class="kw-chip">homeschool tracker</span><span class="kw-chip">curriculum planner</span><span class="kw-chip">homeschool record keeping</span></div></div>
+                    <div class="aso-block"><div class="aso-label">KEY DIFFERENTIATOR IN DESCRIPTION</div><div class="aso-val" style="font-weight:400;">"Set up in 5 minutes. AI generates your weekly lesson plan. State-ready attendance reports. Works beautifully on iPhone and iPad."</div></div>
+                    <div class="aso-block"><div class="aso-label">BUILD AFTER</div><div class="aso-val" style="font-weight:400;">KidLearn is live and on App Store. Estimated build: 3–5 days with AI assistance.</div></div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ROW 3: ADHD -->
+        <tr class="app-row" id="row-adhd" onclick="toggleDetail('adhd')">
+          <td>
+            <div class="app-icon-name">
+              <div class="app-emoji bg-purple">⚡</div>
+              <div>
+                <div class="app-name-cell">ADHD Morning Routine</div>
+                <div style="font-size:11px;color:var(--muted);">Dopamine loops · 5 tasks · Streaks</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="status-pill s-planned">Planned</span></td>
+          <td style="font-family:'DM Mono',monospace;font-size:12px;">$8–10/mo</td>
+          <td style="font-family:'DM Mono',monospace;font-size:12px;">Proven category</td>
+          <td>
+            <div class="progress-mini">
+              <div class="progress-mini-bar"><div class="progress-mini-fill" style="width:0%"></div></div>
+              <span class="progress-mini-pct">0%</span>
+            </div>
+          </td>
+          <td style="font-size:12px;color:var(--muted2);">Competitors overpriced + overcomplicated</td>
+          <td><span class="expand-btn">›</span></td>
+        </tr>
+        <tr class="detail-row" id="detail-adhd">
+          <td colspan="7" style="padding:0;">
+            <div class="detail-panel">
+              <div class="detail-inner">
+                <div class="detail-tabs">
+                  <button class="detail-tab active" onclick="showDetailTab('adhd','competitors',this)">Competitors</button>
+                  <button class="detail-tab" onclick="showDetailTab('adhd','features',this)">Features to Build</button>
+                  <button class="detail-tab" onclick="showDetailTab('adhd','target',this)">Target Customers</button>
+                  <button class="detail-tab" onclick="showDetailTab('adhd','aso',this)">ASO & Launch</button>
+                </div>
+                <div class="detail-content">
+
+                  <div class="detail-section active" id="adhd-competitors">
+                    <div class="comp-grid">
+                      <div class="comp-card">
+                        <div class="comp-name">Tiimo</div>
+                        <div class="comp-price">$12.99/month · $74.99/year</div>
+                        <div class="comp-gap">iPhone App of Year 2025. 3M+ downloads. Beautiful but complex — visual schedule, AI planner, integrations. Overkill for users who just need a simple morning routine.</div>
+                        <div class="comp-reviews">
+                          <div class="comp-review-label">WHAT USERS SAY</div>
+                          <div class="comp-review-text">"Too many features for my simple needs." "Price is high for what I use." "Overwhelming for someone with ADHD."</div>
+                        </div>
+                      </div>
+                      <div class="comp-card">
+                        <div class="comp-name">Inflow</div>
+                        <div class="comp-price">$22.49/month · $270/year</div>
+                        <div class="comp-gap">ADHD coaching app — expensive and broad. CBT-based program, not a simple routine tracker. Users paying this much want comprehensive coaching, not our target.</div>
+                        <div class="comp-reviews">
+                          <div class="comp-review-label">WHAT USERS SAY</div>
+                          <div class="comp-review-text">"Way too expensive." "More like a course than an app." "I just need something simple for mornings."</div>
+                        </div>
+                      </div>
+                      <div class="comp-card">
+                        <div class="comp-name">Routinery</div>
+                        <div class="comp-price">Free / $4.99/month</div>
+                        <div class="comp-gap">Good concept but generic — not ADHD-specific. No dopamine-loop design. Missing the ADHD community branding that drives TikTok virality.</div>
+                        <div class="comp-reviews">
+                          <div class="comp-review-label">WHAT USERS SAY</div>
+                          <div class="comp-review-text">"Doesn't feel built for ADHD." "Notifications not working." "Generic habit app with ADHD label."</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="background:var(--green-bg);border:1px solid var(--green);border-radius:10px;padding:1rem;">
+                      <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:6px;">Our pricing strategy</div>
+                      <div style="font-size:13px;color:var(--muted2);line-height:1.7;">
+                        <strong>$8.99/month · $44.99/year</strong> — significantly below Tiimo ($13) and Inflow ($22).<br>
+                        Free tier: 3 morning tasks, no streak tracking. 7-day free trial on premium.<br>
+                        Positioning: "The ADHD morning app that doesn't overwhelm you." Simple is the product.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="detail-section" id="adhd-features">
+                    <div class="features-grid">
+                      <div class="features-col">
+                        <div class="features-col-title">🔨 Core Features (v1 — keep it simple)</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Morning routine builder — max 5 tasks (enforced limit)</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Task timer — each task has a suggested duration</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Dopamine celebration on each task complete (confetti, sound, streak +1)</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Streak tracker — days completed in a row</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Gentle nudge notifications — not aggressive</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Daily completion % — simple visual</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Night mode — easy on ADHD eyes</div>
+                      </div>
+                      <div class="features-col">
+                        <div class="features-col-title">❌ What NOT to build (scope creep)</div>
+                        <div class="feature-item"><div class="feature-dot dot-red"></div>Full planner / calendar (that's Tiimo — don't compete there)</div>
+                        <div class="feature-item"><div class="feature-dot dot-red"></div>CBT coaching content (that's Inflow)</div>
+                        <div class="feature-item"><div class="feature-dot dot-red"></div>Integrations with other apps (v2 if ever)</div>
+                        <div class="feature-item"><div class="feature-dot dot-red"></div>More than 5 tasks (the limit IS the feature)</div>
+                        <div class="feature-item"><div class="feature-dot dot-red"></div>Social/community features (not needed for launch)</div>
+                        <div class="feature-item"><div class="feature-dot dot-green"></div>The simpler this app is, the better it serves ADHD users</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="detail-section" id="adhd-target">
+                    <div class="target-grid">
+                      <div class="target-card"><div class="target-label">PRIMARY AUDIENCE</div><div class="target-val">ADHD Adults, 18–35</div><div class="target-sub">Diagnosed or self-identified. Struggling with mornings. USA and EU. Heavy TikTok users who share apps in the community.</div></div>
+                      <div class="target-card"><div class="target-label">SECONDARY AUDIENCE</div><div class="target-val">ADHD Women specifically</div><div class="target-sub">#ADHDgirls #ADHDwomen is massive on TikTok. Women with ADHD are underdiagnosed and actively seeking tools. High engagement, high share rate.</div></div>
+                      <div class="target-card"><div class="target-label">PAIN POINT</div><div class="target-val">Morning paralysis</div><div class="target-sub">"I know what I need to do but I can't start." Executive function deficit. Starting the first task is the whole problem.</div></div>
+                      <div class="target-card"><div class="target-label">PRICE SENSITIVITY</div><div class="target-val">Medium</div><div class="target-sub">Will pay $8–10/month but not $22 (Inflow). The Inflow price point is actually our best marketing — "same results, fraction of cost."</div></div>
+                      <div class="target-card"><div class="target-label">CHURN RISK</div><div class="target-val">High — manage it</div><div class="target-sub">ADHD users are prone to abandoning apps. Streak mechanics and gentle re-engagement notifications are critical for retention.</div></div>
+                      <div class="target-card"><div class="target-label">CREATOR CHANNELS</div><div class="target-val">#ADHDtiktok</div><div class="target-sub">#adhdadult #adhdlife #neurodivergent #adhdforgirls #adhdwomen #adhdtips — all high-engagement TikTok communities</div></div>
+                    </div>
+                  </div>
+
+                  <div class="detail-section" id="adhd-aso">
+                    <div class="aso-block"><div class="aso-label">APP TITLE</div><div class="aso-val">ADHD Morning Routine — Focus</div></div>
+                    <div class="aso-block"><div class="aso-label">SUBTITLE</div><div class="aso-val">Simple Dopamine Routine Builder</div></div>
+                    <div class="aso-block"><div class="aso-label">KEYWORDS</div><div style="margin-top:6px;"><span class="kw-chip">adhd routine</span><span class="kw-chip">adhd planner</span><span class="kw-chip">morning routine adhd</span><span class="kw-chip">adhd habits</span><span class="kw-chip">executive function</span><span class="kw-chip">adhd focus</span><span class="kw-chip">neurodivergent planner</span><span class="kw-chip">adhd daily routine</span></div></div>
+                    <div class="aso-block"><div class="aso-label">KEY DIFFERENTIATOR IN DESCRIPTION</div><div class="aso-val" style="font-weight:400;">"Not another overwhelming planner. Just 5 tasks. A timer. A streak. Built for ADHD brains — not adapted from a generic habit app."</div></div>
+                    <div class="aso-block"><div class="aso-label">BUILD AFTER</div><div class="aso-val" style="font-weight:400;">KidLearn App Store submission. Estimated build: 3–4 days. TikTok creator outreach from day 1 of launch.</div></div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- ROW 4: Pet Meds -->
+        <tr class="app-row" id="row-petmeds" onclick="toggleDetail('petmeds')">
+          <td>
+            <div class="app-icon-name">
+              <div class="app-emoji bg-amber">🐾</div>
+              <div>
+                <div class="app-name-cell">Pet Medication Tracker</div>
+                <div style="font-size:11px;color:var(--muted);">Multi-pet · Family sharing · Vet notes</div>
+              </div>
+            </div>
+          </td>
+          <td><span class="status-pill s-planned">Planned</span></td>
+          <td style="font-family:'DM Mono',monospace;font-size:12px;">$5–8/mo</td>
+          <td style="font-family:'DM Mono',monospace;font-size:12px;">$2.8B · 15% CAGR</td>
+          <td>
+            <div class="progress-mini">
+              <div class="progress-mini-bar"><div class="progress-mini-fill" style="width:0%"></div></div>
+              <span class="progress-mini-pct">0%</span>
+            </div>
+          </td>
+          <td style="font-size:12px;color:var(--muted2);">No dominant app · Easiest build</td>
+          <td><span class="expand-btn">›</span></td>
+        </tr>
+        <tr class="detail-row" id="detail-petmeds">
+          <td colspan="7" style="padding:0;">
+            <div class="detail-panel">
+              <div class="detail-inner">
+                <div class="detail-tabs">
+                  <button class="detail-tab active" onclick="showDetailTab('petmeds','competitors',this)">Competitors</button>
+                  <button class="detail-tab" onclick="showDetailTab('petmeds','features',this)">Features to Build</button>
+                  <button class="detail-tab" onclick="showDetailTab('petmeds','target',this)">Target Customers</button>
+                  <button class="detail-tab" onclick="showDetailTab('petmeds','aso',this)">ASO & Launch</button>
+                </div>
+                <div class="detail-content">
+
+                  <div class="detail-section active" id="petmeds-competitors">
+                    <div class="comp-grid">
+                      <div class="comp-card">
+                        <div class="comp-name">PetTimely</div>
+                        <div class="comp-price">$3.99/mo · $39.99/yr (Solo) · $7.99/mo (Family)</div>
+                        <div class="comp-gap">Early stage, good concept. Solo vs Family pricing is smart. But UI is basic — developer admitted "my expertise is software engineering, hired a designer." Active development — window is open now.</div>
+                        <div class="comp-reviews">
+                          <div class="comp-review-label">WHAT USERS SAY</div>
+                          <div class="comp-review-text">"Calendar experience isn't great." "Love that subscription revenue goes back into the project." "Two medically sensitive fur babies — this app is a lifesaver."</div>
+                        </div>
+                      </div>
+                      <div class="comp-card">
+                        <div class="comp-name">Pet Care Reminder (generic)</div>
+                        <div class="comp-price">Free / small one-time</div>
+                        <div class="comp-gap">Multiple tiny apps in this space, none dominant. Reviews across apps report "hard to edit meds", "can't delete a med no longer required", "no family sharing". The gap is screaming at us.</div>
+                        <div class="comp-reviews">
+                          <div class="comp-review-label">WHAT USERS SAY</div>
+                          <div class="comp-review-text">"Hard to edit." "Can't delete a med no longer required." "No way to share with my partner."</div>
+                        </div>
+                      </div>
+                      <div class="comp-card">
+                        <div class="comp-name">DoseMed (human + pet)</div>
+                        <div class="comp-price">Subscription — unclear pricing</div>
+                        <div class="comp-gap">Multi-species — tries to serve both humans and animals. AI assistant. But jack-of-all-trades. Pet owners want something built specifically for pets, not bolted onto a human app.</div>
+                        <div class="comp-reviews">
+                          <div class="comp-review-label">WHAT USERS SAY</div>
+                          <div class="comp-review-text">"Why is it for humans and pets together?" "Too complicated." "I just want pet meds tracking."</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="background:var(--green-bg);border:1px solid var(--green);border-radius:10px;padding:1rem;">
+                      <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:6px;">Our pricing strategy</div>
+                      <div style="font-size:13px;color:var(--muted2);line-height:1.7;">
+                        <strong>$4.99/month · $34.99/year</strong> — just above PetTimely Solo ($3.99) but below their Family ($7.99).<br>
+                        One plan covers unlimited pets + 2 family members (shareable).<br>
+                        Free tier: 1 pet, 2 medications. 7-day free trial on premium.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="detail-section" id="petmeds-features">
+                    <div class="features-grid">
+                      <div class="features-col">
+                        <div class="features-col-title">🔨 Core Features (v1)</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Multiple pet profiles (dog, cat, rabbit, bird, etc.)</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Medication scheduling — daily, weekly, monthly, custom</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Easy edit and delete medications (competitor gap #1)</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Family sharing — add partner/vet to same pet profile (gap #2)</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Dose logging — mark given, skip, note side effects</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Push notifications — medication due reminders</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Vet appointment tracker with notes</div>
+                        <div class="feature-item"><div class="feature-dot dot-accent"></div>Medication history log — exportable for vet visits</div>
+                      </div>
+                      <div class="features-col">
+                        <div class="features-col-title">❌ What NOT to build (v1)</div>
+                        <div class="feature-item"><div class="feature-dot dot-red"></div>Human medication tracking (stay pet-only)</div>
+                        <div class="feature-item"><div class="feature-dot dot-red"></div>Telehealth / vet video calls (too complex)</div>
+                        <div class="feature-item"><div class="feature-dot dot-red"></div>Pet food / nutrition tracking (different problem)</div>
+                        <div class="feature-item"><div class="feature-dot dot-red"></div>GPS tracking / pet location (hardware dependency)</div>
+                        <div class="feature-item"><div class="feature-dot dot-green"></div>Chronic illness pet owners are the power users — build for them. Senior dogs, cats on daily meds, post-surgery recovery.</div>
+                        <div class="feature-item"><div class="feature-dot dot-green"></div>"Two medically sensitive fur babies" — that's your user persona. Design for them.</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="detail-section" id="petmeds-target">
+                    <div class="target-grid">
+                      <div class="target-card"><div class="target-label">PRIMARY AUDIENCE</div><div class="target-val">Pet owners with sick/senior pets</div><div class="target-sub">Dogs/cats on chronic medication. Post-surgery recovery. Daily supplements. These users have the highest need and highest retention.</div></div>
+                      <div class="target-card"><div class="target-label">SECONDARY AUDIENCE</div><div class="target-val">Multi-pet households</div><div class="target-sub">2+ pets with different medication schedules. Currently using paper or general reminder apps — actively searching for a dedicated solution.</div></div>
+                      <div class="target-card"><div class="target-label">BUYER PERSONA</div><div class="target-val">Pet Mom, 28–50</div><div class="target-sub">Treats pets as family. Emotional buyer. US market — $150B annual pet spend. Will pay $5–8/month without hesitation for peace of mind.</div></div>
+                      <div class="target-card"><div class="target-label">CHURN RISK</div><div class="target-val">Very Low</div><div class="target-sub">Pet medications are ongoing — daily for life in many cases. Once set up, the app becomes essential. Retention is naturally high.</div></div>
+                      <div class="target-card"><div class="target-label">MARKET SIZE</div><div class="target-val">$2.8B · 15% CAGR</div><div class="target-sub">Pet care app market to $7B by 2033. USA pet spend $150B/year. 70% of US households own a pet.</div></div>
+                      <div class="target-card"><div class="target-label">CREATOR CHANNELS</div><div class="target-val">#petmom #dogmom</div><div class="target-sub">#catmom #seniordogmom #chronicillnesspet #doghealth #cathealth — niche communities with high trust and share rates</div></div>
+                    </div>
+                  </div>
+
+                  <div class="detail-section" id="petmeds-aso">
+                    <div class="aso-block"><div class="aso-label">APP TITLE</div><div class="aso-val">Pet Med Tracker — Reminders</div></div>
+                    <div class="aso-block"><div class="aso-label">SUBTITLE</div><div class="aso-val">Multi-Pet · Family Sharing · Vet Notes</div></div>
+                    <div class="aso-block"><div class="aso-label">KEYWORDS</div><div style="margin-top:6px;"><span class="kw-chip">pet medication tracker</span><span class="kw-chip">dog medication reminder</span><span class="kw-chip">cat medication</span><span class="kw-chip">pet health tracker</span><span class="kw-chip">pet med reminder</span><span class="kw-chip">pet care app</span><span class="kw-chip">vet appointment tracker</span></div></div>
+                    <div class="aso-block"><div class="aso-label">KEY DIFFERENTIATOR IN DESCRIPTION</div><div class="aso-val" style="font-weight:400;">"Finally — a pet medication tracker you can actually edit. Multiple pets, shared with your partner, full history for vet visits. Built for pet parents who take health seriously."</div></div>
+                    <div class="aso-block"><div class="aso-label">BUILD TIMING</div><div class="aso-val" style="font-weight:400;">Can be built in parallel with KidLearn launch. Estimated build: hours to 1 day. Simplest app on the list. Ship this while waiting for KidLearn App Store review.</div></div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
 
+  <div class="section-title">Killed — 11 ideas removed from pipeline</div>
+  <div class="killed-grid">
+    <div class="killed-card"><div class="killed-name">Stoic Daily Journal</div><div class="killed-reason">4M users + Apple Award. Gap gone.</div></div>
+    <div class="killed-card"><div class="killed-name">Bar Exam Flashcards</div><div class="killed-reason">Content moat. Quimbee acquired 2025.</div></div>
+    <div class="killed-card"><div class="killed-name">Box Breathing / First Responders</div><div class="killed-reason">Institutional buyer. Wrong model.</div></div>
+    <div class="killed-card"><div class="killed-name">Golf Handicap Tracker</div><div class="killed-reason">GHIN is free and official.</div></div>
+    <div class="killed-card"><div class="killed-name">Freelancer Invoice / Tax</div><div class="killed-reason">Wave is free. Trust barrier.</div></div>
+    <div class="killed-card"><div class="killed-name">Ramadan Tracker</div><div class="killed-reason">Seasonal. Can't build MRR.</div></div>
+    <div class="killed-card"><div class="killed-name">Wedding Budget Tracker</div><div class="killed-reason">One-time event. Guaranteed churn.</div></div>
+    <div class="killed-card"><div class="killed-name">Nurse Shift Planner</div><div class="killed-reason">Gap narrowing fast.</div></div>
+    <div class="killed-card"><div class="killed-name">Carnivore Diet Tracker</div><div class="killed-reason">Parked — food DB problem. Revisit Q4.</div></div>
+    <div class="killed-card"><div class="killed-name">Golf Handicap</div><div class="killed-reason">GPS course data is licensed. Wrong terrain.</div></div>
+    <div class="killed-card"><div class="killed-name">Homeschool (Homer/Starfall)</div><div class="killed-reason">Folded into Homeschool Scheduler.</div></div>
+  </div>
+
   <div class="page-footer">
-    <span class="footer-text">Strategy v2.0 — June 2026 — brutal cut from 15 to 4</span>
+    <span class="footer-text">Solsystems App Studio · Ram · Hyderabad</span>
+    <span class="footer-text">Updated: <span id="footer-date"></span></span>
   </div>
 </div>
 
-<!-- ======= PLAYBOOK ======= -->
+<!-- ============ PLAYBOOK ============ -->
 <div class="page" id="page-playbook">
   <div class="hero" style="padding-top:2rem;">
     <div class="hero-tag">// THE LOOP</div>
     <h1 class="hero-title" style="font-size:34px;">Research → Build →<br><span>ASO → Creators → MRR</span></h1>
   </div>
-
   <div class="phases-wrap">
     <div class="phase-item" onclick="togglePhase(this)">
-      <div class="phase-header">
-        <span class="phase-num">PHASE 00</span>
-        <span class="phase-name">Research — find the gap first</span>
-        <span class="phase-time">1–2 hours per idea</span>
-        <span class="phase-toggle">+</span>
-      </div>
-      <div class="phase-body">
-        <ul class="checklist">
-          <li><span class="check-icon"></span>Find 3–5 apps already making money in the niche (App Store search, Sensor Tower free tier)</li>
-          <li><span class="check-icon"></span>Read ALL 1-star and 3-star reviews — that's the product roadmap</li>
-          <li><span class="check-icon"></span>Check download trajectory — growing means expanding market, not saturated</li>
-          <li><span class="check-icon"></span>Confirm no free dominant alternative exists</li>
-          <li><span class="check-icon"></span>Identify creator acquisition path — which hashtag community exists?</li>
-          <li><span class="check-icon"></span>Only proceed if 5/5 criteria pass. If not, kill and move to next idea.</li>
-        </ul>
-      </div>
+      <div class="phase-header"><span class="phase-num">PHASE 00</span><span class="phase-name">Research — find the gap first</span><span class="phase-time">1–2 hrs per idea</span><span class="phase-toggle">+</span></div>
+      <div class="phase-body"><ul class="checklist">
+        <li><span class="check-icon"></span>Find 3–5 apps making money in the niche (App Store search)</li>
+        <li><span class="check-icon"></span>Read ALL 1-star and 3-star reviews — that's the product roadmap</li>
+        <li><span class="check-icon"></span>Confirm no free dominant alternative</li>
+        <li><span class="check-icon"></span>Identify creator acquisition hashtag community</li>
+        <li><span class="check-icon"></span>5/5 criteria pass → build. Otherwise → kill and move on.</li>
+      </ul></div>
     </div>
     <div class="phase-item" onclick="togglePhase(this)">
-      <div class="phase-header">
-        <span class="phase-num">PHASE 01</span>
-        <span class="phase-name">Build — fix the complaints, nothing more</span>
-        <span class="phase-time">Hours to 3 days (AI-assisted)</span>
-        <span class="phase-toggle">+</span>
-      </div>
-      <div class="phase-body">
-        <ul class="checklist">
-          <li><span class="check-icon"></span>Define ONE differentiator from competitor gap — not five</li>
-          <li><span class="check-icon"></span>Fork closest existing codebase where possible</li>
-          <li><span class="check-icon"></span>Set up RevenueCat — 3-day free trial → $9.99/mo or $49.99/yr</li>
-          <li><span class="check-icon"></span>Test in browser first — iOS/Android packaging after web is verified</li>
-          <li><span class="check-icon"></span>Wrap with Capacitor for native (npx cap add ios / android)</li>
-          <li><span class="check-icon"></span>Do not add features not in the competitor gap analysis — scope creep kills speed</li>
-        </ul>
-      </div>
+      <div class="phase-header"><span class="phase-num">PHASE 01</span><span class="phase-name">Build — fix the gap, nothing more</span><span class="phase-time">Hours to 3 days (AI)</span><span class="phase-toggle">+</span></div>
+      <div class="phase-body"><ul class="checklist">
+        <li><span class="check-icon"></span>Define ONE differentiator from competitor gap — not five</li>
+        <li><span class="check-icon"></span>Fork closest codebase where possible</li>
+        <li><span class="check-icon"></span>RevenueCat — 3-day free trial → $9.99/mo or $49.99/yr</li>
+        <li><span class="check-icon"></span>Test in browser first. iOS/Android after web verified.</li>
+        <li><span class="check-icon"></span>No features not in the gap analysis — scope creep kills speed</li>
+      </ul></div>
     </div>
     <div class="phase-item" onclick="togglePhase(this)">
-      <div class="phase-header">
-        <span class="phase-num">PHASE 02</span>
-        <span class="phase-name">ASO — App Store Optimisation</span>
-        <span class="phase-time">2–3 hours</span>
-        <span class="phase-toggle">+</span>
-      </div>
-      <div class="phase-body">
-        <ul class="checklist">
-          <li><span class="check-icon"></span>Title: [Primary Keyword] — [Benefit] · max 30 chars</li>
-          <li><span class="check-icon"></span>Subtitle: second most important keyword · 30 chars</li>
-          <li><span class="check-icon"></span>Keywords: 100 chars, medium volume + low competition</li>
-          <li><span class="check-icon"></span>Description: first 3 lines lead with the pain — visible without tap</li>
-          <li><span class="check-icon"></span>5 screenshots per device (iPhone 6.7", iPad 12.9")</li>
-          <li><span class="check-icon"></span>AI-generated app icon (1024×1024)</li>
-          <li><span class="check-icon"></span>Trigger review request after 3rd session (SKStoreReviewRequest)</li>
-        </ul>
-      </div>
+      <div class="phase-header"><span class="phase-num">PHASE 02</span><span class="phase-name">ASO — App Store Optimisation</span><span class="phase-time">2–3 hrs</span><span class="phase-toggle">+</span></div>
+      <div class="phase-body"><ul class="checklist">
+        <li><span class="check-icon"></span>Title: [Primary Keyword] — [Benefit] · max 30 chars</li>
+        <li><span class="check-icon"></span>Keyword field: 100 chars, medium volume + low competition</li>
+        <li><span class="check-icon"></span>Description: first 3 lines lead with the pain</li>
+        <li><span class="check-icon"></span>5 screenshots per device size (iPhone 6.7", iPad 12.9")</li>
+        <li><span class="check-icon"></span>Review request after 3rd session (SKStoreReviewRequest)</li>
+      </ul></div>
     </div>
     <div class="phase-item" onclick="togglePhase(this)">
-      <div class="phase-header">
-        <span class="phase-num">PHASE 03</span>
-        <span class="phase-name">Creator Outreach</span>
-        <span class="phase-time">20 DMs/week per app · ongoing</span>
-        <span class="phase-toggle">+</span>
-      </div>
-      <div class="phase-body">
-        <ul class="checklist">
-          <li><span class="check-icon"></span>Target: micro-influencers 5K–100K, engagement >3%, niche-specific</li>
-          <li><span class="check-icon"></span>Find via hashtag search on Instagram + TikTok</li>
-          <li><span class="check-icon"></span>Offer: free lifetime access + 30% affiliate on first month</li>
-          <li><span class="check-icon"></span>Expect 10–15% response rate · 2–3 will post · 50–200 installs per post</li>
-          <li><span class="check-icon"></span>Track all outreach in Creators tab</li>
-        </ul>
-      </div>
+      <div class="phase-header"><span class="phase-num">PHASE 03</span><span class="phase-name">Creator Outreach</span><span class="phase-time">20 DMs/week per app</span><span class="phase-toggle">+</span></div>
+      <div class="phase-body"><ul class="checklist">
+        <li><span class="check-icon"></span>Micro-influencers 5K–100K, engagement >3%, niche-specific</li>
+        <li><span class="check-icon"></span>Free lifetime access + 30% affiliate on first month</li>
+        <li><span class="check-icon"></span>10–15% response · 2–3 posts · 50–200 installs per post</li>
+      </ul></div>
     </div>
     <div class="phase-item" onclick="togglePhase(this)">
-      <div class="phase-header">
-        <span class="phase-num">PHASE 04</span>
-        <span class="phase-name">Measure & Decide</span>
-        <span class="phase-time">Every Monday · 30 min</span>
-        <span class="phase-toggle">+</span>
-      </div>
-      <div class="phase-body">
-        <ul class="checklist">
-          <li><span class="check-icon"></span>20 subs in month 1 → continue investing</li>
-          <li><span class="check-icon"></span>50 subs in month 2 → double down, pause others</li>
-          <li><span class="check-icon"></span>Under 10 after 6 weeks → diagnose (ASO? audience? pricing?) → fix or kill</li>
-          <li><span class="check-icon"></span>Tools: RevenueCat (MRR) + App Store Connect (installs) — both free</li>
-          <li><span class="check-icon"></span>LTV target: $50+ · CAC target: under $10 · LTV:CAC ratio > 3:1</li>
-        </ul>
-      </div>
-    </div>
-    <div class="phase-item" onclick="togglePhase(this)">
-      <div class="phase-header">
-        <span class="phase-num">PHASE 05</span>
-        <span class="phase-name">Double Down — when app hits 50+ subscribers</span>
-        <span class="phase-time">Winner takes more resources</span>
-        <span class="phase-toggle">+</span>
-      </div>
-      <div class="phase-body">
-        <ul class="checklist">
-          <li><span class="check-icon"></span>Expand content / features (v2)</li>
-          <li><span class="check-icon"></span>Add AI premium tier at $14.99/month</li>
-          <li><span class="check-icon"></span>Paid UA on Meta/TikTok — $5/day to start</li>
-          <li><span class="check-icon"></span>Localise for 1 additional language/market</li>
-          <li><span class="check-icon"></span>Reach out to 50 more creators</li>
-          <li><span class="check-icon"></span>PR: pitch niche blogs, podcasts, newsletters</li>
-        </ul>
-      </div>
+      <div class="phase-header"><span class="phase-num">PHASE 04</span><span class="phase-name">Measure & Decide</span><span class="phase-time">Every Monday · 30 min</span><span class="phase-toggle">+</span></div>
+      <div class="phase-body"><ul class="checklist">
+        <li><span class="check-icon"></span>20 subs month 1 → continue · 50 subs month 2 → double down</li>
+        <li><span class="check-icon"></span>Under 10 after 6 weeks → diagnose or kill</li>
+        <li><span class="check-icon"></span>RevenueCat (MRR) + App Store Connect (installs) — both free</li>
+      </ul></div>
     </div>
   </div>
-
-  <div class="page-footer">
-    <span class="footer-text">The Loop v2.0 — Research first, build second</span>
-  </div>
+  <div class="page-footer"><span class="footer-text">The Loop v2.0 — Research first, build second</span></div>
 </div>
 
-<!-- ======= TRACKER ======= -->
+<!-- ============ TRACKER ============ -->
 <div class="page" id="page-tracker">
   <div class="hero" style="padding-top:2rem;">
     <div class="hero-tag">// METRICS TRACKER</div>
     <h1 class="hero-title" style="font-size:34px;">Numbers don't lie.<br><span>Track everything weekly.</span></h1>
   </div>
-
   <div class="tracker-tabs">
     <button class="tracker-tab active" onclick="showTracker('kidlearn',this)">🦜 KidLearn</button>
     <button class="tracker-tab" onclick="showTracker('homeschool',this)">📚 Homeschool</button>
-    <button class="tracker-tab" onclick="showTracker('adhd',this)">⚡ ADHD Routine</button>
+    <button class="tracker-tab" onclick="showTracker('adhd',this)">⚡ ADHD</button>
     <button class="tracker-tab" onclick="showTracker('petmeds',this)">🐾 Pet Meds</button>
     <button class="tracker-tab" onclick="showTracker('mrr',this)">MRR Overview</button>
   </div>
-
   <div class="tracker-panel active" id="tracker-kidlearn">
     <div class="metrics-grid">
       <div class="metric-card"><div class="metric-label">INSTALLS</div><div class="metric-val pending">—</div></div>
       <div class="metric-card"><div class="metric-label">TRIAL STARTS</div><div class="metric-val pending">—</div></div>
       <div class="metric-card"><div class="metric-label">PAID SUBS</div><div class="metric-val pending">—</div></div>
       <div class="metric-card"><div class="metric-label">MRR</div><div class="metric-val pending">$0</div></div>
-      <div class="metric-card"><div class="metric-label">CONVERSION</div><div class="metric-val accent">&gt;25%</div></div>
-    </div>
-    <div class="section-title">ASO Keywords</div>
-    <div style="margin-bottom:1.5rem;">
-      <span class="kw-chip">esl kids</span><span class="kw-chip">english preschool</span>
-      <span class="kw-chip">toddler learning</span><span class="kw-chip">arabic english kids</span>
-      <span class="kw-chip">esl arabic</span><span class="kw-chip">bilingual preschool</span>
-      <span class="kw-chip">spanish english kids</span><span class="kw-chip">esl spanish</span>
-      <span class="kw-chip">kids vocabulary</span><span class="kw-chip">phonics app</span>
+      <div class="metric-card"><div class="metric-label">CONVERSION TARGET</div><div class="metric-val accent">&gt;25%</div></div>
     </div>
     <div class="table-card">
       <table class="weekly-table">
         <thead><tr><th>WEEK</th><th>INSTALLS</th><th>TRIALS</th><th>PAID</th><th>MRR</th><th>NOTES</th></tr></thead>
         <tbody>
-          <tr class="current-week"><td>Week 1</td><td class="empty-val">—</td><td class="empty-val">—</td><td class="empty-val">—</td><td class="empty-val">—</td><td style="font-size:11px;color:var(--accent);">App Store submission</td></tr>
+          <tr class="current-week"><td>Week 1</td><td class="empty-val">—</td><td class="empty-val">—</td><td class="empty-val">—</td><td class="empty-val">—</td><td style="font-size:11px;color:var(--accent);">Submission week</td></tr>
           <tr><td>Week 2</td><td class="empty-val">—</td><td class="empty-val">—</td><td class="empty-val">—</td><td class="empty-val">—</td><td></td></tr>
           <tr><td>Week 3</td><td class="empty-val">—</td><td class="empty-val">—</td><td class="empty-val">—</td><td class="empty-val">—</td><td></td></tr>
           <tr><td>Week 4</td><td class="empty-val">—</td><td class="empty-val">—</td><td class="empty-val">—</td><td class="empty-val">—</td><td></td></tr>
@@ -586,90 +880,57 @@
       </table>
     </div>
   </div>
-
-  <div class="tracker-panel" id="tracker-homeschool">
-    <div class="empty-state"><div style="font-size:32px;margin-bottom:1rem;">📚</div><div style="font-weight:700;margin-bottom:6px;">Homeschool Daily Scheduler</div><div style="font-size:12px;">Build starts after KidLearn is live on App Store</div></div>
-  </div>
-  <div class="tracker-panel" id="tracker-adhd">
-    <div class="empty-state"><div style="font-size:32px;margin-bottom:1rem;">⚡</div><div style="font-weight:700;margin-bottom:6px;">ADHD Morning Routine</div><div style="font-size:12px;">Build starts after KidLearn is live on App Store</div></div>
-  </div>
-  <div class="tracker-panel" id="tracker-petmeds">
-    <div class="empty-state"><div style="font-size:32px;margin-bottom:1rem;">🐾</div><div style="font-weight:700;margin-bottom:6px;">Pet Medication Tracker</div><div style="font-size:12px;">Easiest build — can run in parallel with KidLearn launch</div></div>
-  </div>
+  <div class="tracker-panel" id="tracker-homeschool"><div class="empty-state"><div style="font-size:32px;margin-bottom:1rem;">📚</div><div style="font-weight:700;margin-bottom:6px;">Homeschool Daily Scheduler</div><div style="font-size:12px;">Starts after KidLearn is live on App Store</div></div></div>
+  <div class="tracker-panel" id="tracker-adhd"><div class="empty-state"><div style="font-size:32px;margin-bottom:1rem;">⚡</div><div style="font-weight:700;margin-bottom:6px;">ADHD Morning Routine</div><div style="font-size:12px;">Starts after KidLearn is live on App Store</div></div></div>
+  <div class="tracker-panel" id="tracker-petmeds"><div class="empty-state"><div style="font-size:32px;margin-bottom:1rem;">🐾</div><div style="font-weight:700;margin-bottom:6px;">Pet Medication Tracker</div><div style="font-size:12px;">Can run in parallel — hours to build</div></div></div>
   <div class="tracker-panel" id="tracker-mrr">
     <div class="metrics-grid" style="grid-template-columns:repeat(3,1fr);">
       <div class="metric-card"><div class="metric-label">TOTAL MRR</div><div class="metric-val green">$0</div></div>
       <div class="metric-card"><div class="metric-label">MRR TARGET</div><div class="metric-val accent">$5,000</div></div>
       <div class="metric-card"><div class="metric-label">TOTAL SUBSCRIBERS</div><div class="metric-val pending">0</div></div>
     </div>
-    <div class="empty-state" style="margin-top:1rem;"><div style="font-size:13px;">MRR chart populates once first app is live.</div></div>
+    <div class="empty-state" style="margin-top:1rem;"><div style="font-size:13px;">Chart populates once first app is live.</div></div>
   </div>
-
-  <div class="page-footer">
-    <span class="footer-text">20 subs → continue · 50 subs → double down · &lt;10 after 6 weeks → kill</span>
-  </div>
+  <div class="page-footer"><span class="footer-text">20 subs → continue · 50 subs → double down · &lt;10 after 6 weeks → kill</span></div>
 </div>
 
-<!-- ======= CREATORS ======= -->
+<!-- ============ CREATORS ============ -->
 <div class="page" id="page-creators">
   <div class="hero" style="padding-top:2rem;">
     <div class="hero-tag">// CREATOR OUTREACH</div>
     <h1 class="hero-title" style="font-size:34px;">Content is the<br><span>acquisition channel.</span></h1>
   </div>
-
-  <div class="section-title">Target Hashtags per App</div>
   <div style="margin-bottom:1.5rem;">
-    <div style="font-size:12px;color:var(--muted);margin-bottom:6px;font-family:'DM Mono',monospace;">🦜 KIDLEARN — Arabic/Spanish/French ESL</div>
-    <span class="kw-chip">#arabicmom</span><span class="kw-chip">#spanishmom</span><span class="kw-chip">#bilingualfamily</span><span class="kw-chip">#eslfamily</span><span class="kw-chip">#preschoolmom</span><span class="kw-chip">#toddlerlearning</span>
+    <div class="section-title">Hashtags per app</div>
+    <div style="margin-bottom:10px;"><span style="font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;margin-right:8px;">🦜 KidLearn</span><span class="kw-chip">#arabicmom</span><span class="kw-chip">#spanishmom</span><span class="kw-chip">#bilingualfamily</span><span class="kw-chip">#eslfamily</span><span class="kw-chip">#preschoolmom</span><span class="kw-chip">#toddlerlearning</span></div>
+    <div style="margin-bottom:10px;"><span style="font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;margin-right:8px;">📚 Homeschool</span><span class="kw-chip">#homeschoolmom</span><span class="kw-chip">#homeschooling</span><span class="kw-chip">#homeschoolfamily</span><span class="kw-chip">#unschooling</span></div>
+    <div style="margin-bottom:10px;"><span style="font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;margin-right:8px;">⚡ ADHD</span><span class="kw-chip">#ADHDtiktok</span><span class="kw-chip">#adhdadult</span><span class="kw-chip">#adhdwomen</span><span class="kw-chip">#neurodivergent</span><span class="kw-chip">#adhdforgirls</span></div>
+    <div style="margin-bottom:10px;"><span style="font-size:12px;color:var(--muted);font-family:'DM Mono',monospace;margin-right:8px;">🐾 Pet Meds</span><span class="kw-chip">#petmom</span><span class="kw-chip">#dogmom</span><span class="kw-chip">#catmom</span><span class="kw-chip">#seniordogmom</span><span class="kw-chip">#chronicillnesspet</span></div>
   </div>
-  <div style="margin-bottom:1.5rem;">
-    <div style="font-size:12px;color:var(--muted);margin-bottom:6px;font-family:'DM Mono',monospace;">📚 HOMESCHOOL SCHEDULER</div>
-    <span class="kw-chip">#homeschoolmom</span><span class="kw-chip">#homeschooling</span><span class="kw-chip">#homeschoolfamily</span><span class="kw-chip">#unschooling</span><span class="kw-chip">#homeschoollife</span>
-  </div>
-  <div style="margin-bottom:1.5rem;">
-    <div style="font-size:12px;color:var(--muted);margin-bottom:6px;font-family:'DM Mono',monospace;">⚡ ADHD MORNING ROUTINE</div>
-    <span class="kw-chip">#ADHDtiktok</span><span class="kw-chip">#adhdadult</span><span class="kw-chip">#adhdlife</span><span class="kw-chip">#neurodivergent</span><span class="kw-chip">#adhdforgirls</span>
-  </div>
-  <div style="margin-bottom:1.5rem;">
-    <div style="font-size:12px;color:var(--muted);margin-bottom:6px;font-family:'DM Mono',monospace;">🐾 PET MEDICATION TRACKER</div>
-    <span class="kw-chip">#petmom</span><span class="kw-chip">#dogmom</span><span class="kw-chip">#catmom</span><span class="kw-chip">#petcare</span><span class="kw-chip">#seniordogmom</span><span class="kw-chip">#chronicillnesspet</span>
-  </div>
-
   <div class="section-title">DM Template</div>
   <div class="template-box">Hi <mark>[Name]</mark>,
 
 I've been following your content on <mark>[topic]</mark> — your post about <mark>[specific post]</mark> really resonated.
 
-I built <mark>[App Name]</mark> — a <mark>[one-line description]</mark> for <mark>[their exact audience]</mark>. I think your audience would genuinely love it.
+I built <mark>[App Name]</mark> — a <mark>[one-line description]</mark> for <mark>[their exact audience]</mark>.
 
-Free lifetime access + 30% revenue share on any subscriptions you drive (tracked with a promo code). No obligation, no script — use it honestly and share if you love it.
+Free lifetime access + 30% revenue share on any subscriptions you drive. No script — use it honestly and share if you love it.
 
 Open to a quick look?
 
 Ram</div>
-
   <div class="info-card" style="margin-top:1.5rem;">
     <div class="info-card-title">Deal Structure</div>
-    <div class="info-card-body">
-      ✓ &nbsp;Free lifetime access + promo code (10–20% off for their audience)<br>
-      ✓ &nbsp;Affiliate: 30% of first month per referral (tracked via RevenueCat)<br>
-      ✗ &nbsp;Flat fee: avoid until MRR supports it<br><br>
-      <strong>Volume:</strong> 20 DMs/week per app · 10–15% response · 2–3 will post · 50–200 installs per post from a 50K creator
-    </div>
+    <div class="info-card-body">✓ Free lifetime access + promo code (10–20% off for their audience)<br>✓ Affiliate: 30% of first month per referral (RevenueCat tracking)<br>✗ Flat fee: avoid until MRR supports it<br><br><strong>Volume:</strong> 20 DMs/week per app · 10–15% response · 2–3 posts · 50–200 installs per post</div>
   </div>
-
-  <div class="table-card" style="margin-top:1.5rem;">
-    <table class="weekly-table">
+  <div class="section-title" style="margin-top:1.5rem;">Outreach Log</div>
+  <div class="creator-table-wrap">
+    <table class="creator-table">
       <thead><tr><th>CREATOR</th><th>PLATFORM</th><th>FOLLOWERS</th><th>APP</th><th>STATUS</th><th>RESULT</th></tr></thead>
-      <tbody>
-        <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:2rem;font-size:12px;">No outreach logged yet — start with 20 DMs this week</td></tr>
-      </tbody>
+      <tbody><tr><td colspan="6" style="text-align:center;padding:2rem;font-size:12px;">No outreach logged yet — start with 20 DMs this week</td></tr></tbody>
     </table>
   </div>
-
-  <div class="page-footer">
-    <span class="footer-text">Solsystems App Studio · Creator Outreach v2.0</span>
-  </div>
+  <div class="page-footer"><span class="footer-text">Solsystems App Studio · Creator Outreach v2.0</span></div>
 </div>
 
 <script>
@@ -680,24 +941,46 @@ Ram</div>
   if(fd) fd.textContent = ds;
 
   function showPage(id, btn) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('page-' + id).classList.add('active');
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+    document.getElementById('page-'+id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function toggleDetail(id) {
+    const row = document.getElementById('row-'+id);
+    const detail = document.getElementById('detail-'+id);
+    const isOpen = detail.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.detail-row').forEach(r=>r.classList.remove('open'));
+    document.querySelectorAll('.app-row').forEach(r=>r.classList.remove('active-row'));
+    // Open if was closed
+    if(!isOpen) {
+      detail.classList.add('open');
+      row.classList.add('active-row');
+    }
+  }
+
+  function showDetailTab(app, section, btn) {
+    const content = btn.closest('.detail-inner');
+    content.querySelectorAll('.detail-section').forEach(s=>s.classList.remove('active'));
+    content.querySelectorAll('.detail-tab').forEach(t=>t.classList.remove('active'));
+    document.getElementById(app+'-'+section).classList.add('active');
     btn.classList.add('active');
   }
 
   function togglePhase(el) {
     const body = el.querySelector('.phase-body');
     const isOpen = body.classList.contains('open');
-    document.querySelectorAll('.phase-body').forEach(b => b.classList.remove('open'));
-    document.querySelectorAll('.phase-item').forEach(i => i.classList.remove('expanded'));
-    if (!isOpen) { body.classList.add('open'); el.classList.add('expanded'); }
+    document.querySelectorAll('.phase-body').forEach(b=>b.classList.remove('open'));
+    document.querySelectorAll('.phase-item').forEach(i=>i.classList.remove('expanded'));
+    if(!isOpen){body.classList.add('open');el.classList.add('expanded');}
   }
 
   function showTracker(id, btn) {
-    document.querySelectorAll('.tracker-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tracker-tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('tracker-' + id).classList.add('active');
+    document.querySelectorAll('.tracker-panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tracker-tab').forEach(t=>t.classList.remove('active'));
+    document.getElementById('tracker-'+id).classList.add('active');
     btn.classList.add('active');
   }
 </script>
