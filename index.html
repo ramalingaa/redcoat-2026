@@ -205,6 +205,7 @@
     <button class="nav-tab" onclick="showPage('playbook',this)">Playbook</button>
     <button class="nav-tab" onclick="showPage('tracker',this)">Tracker</button>
     <button class="nav-tab" onclick="showPage('creators',this)">Creators</button>
+    <button class="nav-tab" onclick="showPage('sketchpen',this)" style="background:#fff7ed;color:#c0440a;border:1px solid #fed7aa;">✏️ SketchPen</button>
   </div>
   <div class="nav-date" id="nav-date"></div>
 </nav>
@@ -932,6 +933,412 @@ Ram</div>
   </div>
   <div class="page-footer"><span class="footer-text">Solsystems App Studio · Creator Outreach v2.0</span></div>
 </div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SKETCHPEN PAGE                                         -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-sketchpen">
+  <div class="hero">
+    <div class="hero-tag">ACTIVE PROJECT · JUNE 2026</div>
+    <div class="hero-title">✏️ SketchPen <span style="color:#c0440a;">— Pen Sketch Illustration SaaS</span></div>
+    <div class="hero-sub">A consistent pen sketch illustration system for creators who publish regularly. Not an image generator — a style system. SVG output, infinitely scalable, same style every time.</div>
+  </div>
+
+  <!-- STATUS STRIP -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:2rem;">
+    <div class="stat-card">
+      <div class="stat-label">STATUS</div>
+      <div style="font-size:16px;font-weight:800;color:#c0440a;">BUILDING MVP</div>
+      <div class="stat-delta">Vercel link → validate</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">MODEL</div>
+      <div style="font-size:14px;font-weight:800;color:#1a4e8a;">Gemini 3.5 Flash</div>
+      <div class="stat-delta">$0.079/illustration</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">TARGET PRICE</div>
+      <div class="stat-value amber">$29</div>
+      <div class="stat-delta">50 credits/mo · Creator</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">GROSS MARGIN</div>
+      <div class="stat-value green">79%</div>
+      <div class="stat-delta">At $49/Pro · 100 credits</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">PHASE 1 GOAL</div>
+      <div style="font-size:14px;font-weight:800;">10 paying users</div>
+      <div class="stat-delta">From 2+ segments</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div style="display:flex;gap:6px;margin-bottom:1.5rem;border-bottom:1px solid var(--border);padding-bottom:0;">
+    <button class="tracker-tab active" onclick="showSP('product',this)" style="font-size:12px;">Product</button>
+    <button class="tracker-tab" onclick="showSP('model',this)" style="font-size:12px;">Model & Cost</button>
+    <button class="tracker-tab" onclick="showSP('pricing',this)" style="font-size:12px;">Pricing</button>
+    <button class="tracker-tab" onclick="showSP('traction',this)" style="font-size:12px;">Traction</button>
+    <button class="tracker-tab" onclick="showSP('content',this)" style="font-size:12px;">Content Plan</button>
+    <button class="tracker-tab" onclick="showSP('tech',this)" style="font-size:12px;">Tech Stack</button>
+  </div>
+
+  <!-- ── PRODUCT TAB ── -->
+  <div id="sp-product" class="tracker-panel active">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+      <div>
+        <div class="section-title">What It Is</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem;">
+          <div style="font-weight:700;margin-bottom:.5rem;">One-line positioning</div>
+          <div style="font-size:13px;color:var(--muted2);line-height:1.6;">"Your consistent illustration style, generated on demand."</div>
+          <div style="margin-top:.75rem;font-size:12px;color:var(--muted);font-style:italic;">Not an image generator competing with Midjourney. A style system for creators who publish regularly.</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem;">
+          <div style="font-weight:700;margin-bottom:.75rem;">Core Differentiators</div>
+          <div style="font-size:12px;color:var(--muted2);line-height:2;">
+            ✅ Same style every time — diffusion models can't do this<br>
+            ✅ SVG output — infinitely scalable, editable, embeds anywhere<br>
+            ✅ Zero copyright ambiguity — generated code, not raster<br>
+            ✅ Works at any size — business card to billboard<br>
+            ✅ Consistent visual identity across a whole book or newsletter
+          </div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;">
+          <div style="font-weight:700;margin-bottom:.75rem;">Why Not Midjourney / DALL-E / Nano Banana</div>
+          <div style="font-size:12px;color:var(--muted2);line-height:1.8;">
+            Nano Banana produces stunning photorealistic images. But generate the same scene twice → two completely different images. A children's book needs 30 pages where the same character looks identical every time. That's the gap SketchPen fills.
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-title">Illustration Styles</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;">
+            <div style="background:var(--surface2);border-radius:8px;padding:.75rem;">
+              <div style="font-weight:700;font-size:12px;">Paper Sketch</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:3px;">Default. Black ink, off-white paper, hand-drawn feel.</div>
+            </div>
+            <div style="background:var(--surface2);border-radius:8px;padding:.75rem;">
+              <div style="font-weight:700;font-size:12px;">Blueprint</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:3px;">Dark navy bg, technical line art, dimension callouts.</div>
+            </div>
+            <div style="background:var(--surface2);border-radius:8px;padding:.75rem;">
+              <div style="font-weight:700;font-size:12px;">Minimal Line</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:3px;">Pure white, ultra sparse, Japanese minimalist.</div>
+            </div>
+            <div style="background:var(--surface2);border-radius:8px;padding:.75rem;">
+              <div style="font-weight:700;font-size:12px;">Notebook Doodle</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:3px;">Ruled paper background, casual annotations.</div>
+            </div>
+          </div>
+        </div>
+        <div class="section-title">Key Files</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;line-height:2.2;color:var(--muted2);">
+            📄 SYSTEM_PROMPT.md — illustration system prompt<br>
+            📄 CLAUDE.md — Claude Code build instructions<br>
+            📄 SVG_STREAMING_RENDERER.md — streaming SVG renderer<br>
+            📄 COST_ANALYSIS.md — per-illustration cost breakdown<br>
+            📁 Google Drive → "Sketchy Model Test Illustrations" (10 SVGs)<br>
+          </div>
+          <div style="margin-top:.75rem;font-size:11px;color:var(--muted);">All files generated Jun 5, 2026 · Claude Sonnet 4.6</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODEL & COST TAB ── -->
+  <div id="sp-model" class="tracker-panel">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+      <div>
+        <div class="section-title">Model Decision</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem;">
+          <div style="font-weight:700;margin-bottom:.75rem;color:#c0440a;">Primary: Gemini 3.5 Flash ✅ TESTED</div>
+          <div style="font-size:12px;color:var(--muted2);line-height:1.8;">
+            Input: $1.50/MTok · Output: $9.00/MTok<br>
+            Thinking tokens: ~5,757 (billed at output rate)<br>
+            <strong>Cost per illustration: ~$0.079</strong><br>
+            Quality: ⭐⭐⭐⭐⭐ — best seen in testing<br>
+            Produced period-accurate London couple, Big Ben, Fleet Street sign without a system prompt.<br><br>
+            <span style="color:var(--green);font-weight:600;">Key advantage:</span> Thinking tokens are 5,757 vs Gemini 3.1 Pro's 22,576 — 4× more efficient reasoning.
+          </div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;">
+          <div style="font-weight:700;margin-bottom:.75rem;">Next To Test</div>
+          <div style="font-size:12px;color:var(--muted2);line-height:2;">
+            🔲 GPT-4.1 — $2/$8 per MTok, no thinking, strong instruction following<br>
+            🔲 Gemini 3.5 Flash with thinking OFF — target $0.027/illus<br>
+            🔲 DeepSeek V4 Pro — $0.30/$0.50 if quality holds<br>
+            ❌ Gemini 3.1 Pro — 22,576 thinking tokens, too expensive<br>
+            ❌ DeepSeek V4 Pro current — tested, not even close to Haiku
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-title">Token Flow Per Operation</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem;">
+          <div style="font-weight:700;font-size:12px;margin-bottom:.5rem;color:#1a4e8a;">FRESH GENERATION</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted2);line-height:2;">
+            Input:  2,524 tokens (system + prompt)<br>
+            Output: 8,334 tokens (SVG + thinking)<br>
+            <strong>Cost: $0.079</strong>
+          </div>
+          <div style="font-weight:700;font-size:12px;margin-top:1rem;margin-bottom:.5rem;color:#c0440a;">MODIFICATION (user edits)</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted2);line-height:2;">
+            Input:  10,873 tokens (system + OLD SVG + instruction)<br>
+            Output: 8,334 tokens (full new SVG regenerated)<br>
+            <strong>Cost: $0.091 — 16% more than fresh</strong>
+          </div>
+          <div style="margin-top:.75rem;background:var(--amber-bg);border-radius:8px;padding:.6rem .75rem;font-size:11px;color:var(--amber);">
+            ⚠️ The old SVG (~8,000 tokens) is sent back as input on every modification. This is why modifications cost more, not less.
+          </div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;">
+          <div style="font-weight:700;font-size:12px;margin-bottom:.75rem;">Prompt Caching</div>
+          <div style="font-size:12px;color:var(--muted2);line-height:1.8;">
+            System prompt (~2,489 tokens) cached after first call.<br>
+            Cache reads: $0.15/MTok vs $1.50 standard = 90% off.<br>
+            <strong>But:</strong> output tokens dominate cost. Caching barely moves the needle on SVG generation — savings are &lt;5% of total.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PRICING TAB ── -->
+  <div id="sp-pricing" class="tracker-panel">
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:1.5rem;">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:.5rem;">STARTER</div>
+        <div style="font-size:24px;font-weight:800;">$15<span style="font-size:12px;font-weight:400;color:var(--muted)">/mo</span></div>
+        <div style="font-size:11px;color:var(--muted2);margin:.5rem 0;">25 credits</div>
+        <div style="font-size:11px;color:var(--green);font-family:'DM Mono',monospace;">$11.93 profit · 79%</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:.4rem;">Try the style</div>
+      </div>
+      <div style="background:#fff7ed;border:2px solid #fed7aa;border-radius:12px;padding:1rem;text-align:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:#c0440a;margin-bottom:.5rem;">CREATOR ⭐</div>
+        <div style="font-size:24px;font-weight:800;color:#c0440a;">$29<span style="font-size:12px;font-weight:400;color:var(--muted)">/mo</span></div>
+        <div style="font-size:11px;color:var(--muted2);margin:.5rem 0;">50 credits</div>
+        <div style="font-size:11px;color:var(--green);font-family:'DM Mono',monospace;">$22.78 profit · 79%</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:.4rem;">Weekly publishers</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:.5rem;">PRO</div>
+        <div style="font-size:24px;font-weight:800;">$49<span style="font-size:12px;font-weight:400;color:var(--muted)">/mo</span></div>
+        <div style="font-size:11px;color:var(--muted2);margin:.5rem 0;">100 credits</div>
+        <div style="font-size:11px;color:var(--green);font-family:'DM Mono',monospace;">$36.56 profit · 75%</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:.4rem;">Daily creators</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:.5rem;">STUDIO</div>
+        <div style="font-size:24px;font-weight:800;">$99<span style="font-size:12px;font-weight:400;color:var(--muted)">/mo</span></div>
+        <div style="font-size:11px;color:var(--muted2);margin:.5rem 0;">200 credits</div>
+        <div style="font-size:11px;color:var(--green);font-family:'DM Mono',monospace;">$74.11 profit · 75%</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:.4rem;">Power users</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:.5rem;">AGENCY</div>
+        <div style="font-size:24px;font-weight:800;">$199<span style="font-size:12px;font-weight:400;color:var(--muted)">/mo</span></div>
+        <div style="font-size:11px;color:var(--muted2);margin:.5rem 0;">500 credits</div>
+        <div style="font-size:11px;color:var(--green);font-family:'DM Mono',monospace;">$138.78 profit · 70%</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:.4rem;">Teams</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;">
+        <div style="font-weight:700;margin-bottom:.75rem;">Credit System Rules</div>
+        <div style="font-size:12px;color:var(--muted2);line-height:2.2;">
+          ✅ 1 credit = 1 fresh generation<br>
+          ✅ 1 credit = 1 modification (same cost, SVG sent as context)<br>
+          ✅ 0 credits = SVG download<br>
+          ✅ 0 credits = PNG download<br>
+          ✅ 0 credits = view saved gallery<br>
+          ✅ Credits deducted ONLY on successful generation<br>
+          ✅ Failed API calls → no credit deducted<br>
+          ✅ Before modifying → auto-save current version to gallery
+        </div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;">
+        <div style="font-weight:700;margin-bottom:.75rem;">UX Protection Layer</div>
+        <div style="font-size:12px;color:var(--muted2);line-height:1.8;">
+          <strong>Confirm before modify:</strong> "This will use 1 credit. You have 47 remaining." → Confirm button<br><br>
+          <strong>Auto-save before modify:</strong> Save current SVG to gallery so users can revert without burning another credit<br><br>
+          <strong>Smart prompt tips:</strong> "Be specific — 'make sky darker and add rain' uses the same 1 credit as 'change it a bit'"<br><br>
+          <strong>80% upgrade trigger:</strong> When user hits 80% credits → "You're nearly out — upgrade to [next tier]"
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TRACTION TAB ── -->
+  <div id="sp-traction" class="tracker-panel">
+    <div style="background:var(--accent-bg);border:1px solid #bfdbfe;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:13px;color:#1e40af;">
+      <strong>Phase 1 Traction Definition:</strong> Get 10 paying customers from at least 2 different segments, each paying ≥$19/month, with at least 3 generating illustrations in their first week. A customer saying yes is NOT traction. A customer paying is traction. — Traction (Gabrielle)
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+      <div style="background:var(--surface);border:2px solid var(--green);border-radius:12px;padding:1rem;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--green);margin-bottom:.5rem;">PRIORITY 1</div>
+        <div style="font-weight:700;margin-bottom:.4rem;">Substack / Newsletter Writers</div>
+        <div style="font-size:11px;color:var(--muted2);line-height:1.7;">Publish weekly, need fresh art every issue. r/Newsletters (68k), r/Substack (42k), Substack writer Discord.<br><br><strong>Pitch:</strong> "Made this for your newsletter topic in 30 seconds. Try free: [link]"</div>
+      </div>
+      <div style="background:var(--surface);border:2px solid var(--green);border-radius:12px;padding:1rem;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--green);margin-bottom:.5rem;">PRIORITY 2</div>
+        <div style="font-weight:700;margin-bottom:.4rem;">Newspaper Editors</div>
+        <div style="font-size:11px;color:var(--muted2);line-height:1.7;">Most underrated segment. Editorial teams at The Hindu, Times of India, regional papers. High value, sticky, institutional rate potential. One editor = $99–199/month.<br><br><strong>Pitch:</strong> "Editorial cartoon style, generated from your headline."</div>
+      </div>
+      <div style="background:var(--surface);border:2px solid var(--amber);border-radius:12px;padding:1rem;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--amber);margin-bottom:.5rem;">PRIORITY 3</div>
+        <div style="font-weight:700;margin-bottom:.4rem;">Children's / Kindle Book Authors</div>
+        <div style="font-size:11px;color:var(--muted2);line-height:1.7;">Need 20–30 consistent illustrations per book. Freelancers cost $2,000–$8,000. 20Books50K Facebook (85k members), r/selfpublish (45k).<br><br><strong>Pitch:</strong> "Consistent style across all 30 pages. Same character every time."</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:.5rem;">PRIORITY 4</div>
+        <div style="font-weight:700;margin-bottom:.4rem;">LinkedIn Long-Form Writers</div>
+        <div style="font-size:11px;color:var(--muted2);line-height:1.7;">Narrowed to essay writers only — 500-word thought leadership posts needing a visual hook. NOT general LinkedIn creators.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:.5rem;">PRIORITY 5</div>
+        <div style="font-weight:700;margin-bottom:.4rem;">Course Creators (Teachable/Gumroad)</div>
+        <div style="font-size:11px;color:var(--muted2);line-height:1.7;">Need slide illustrations that match across a whole deck. Specific enough to reach — not "education content creators" broadly.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:.5rem;">PRIORITY 6</div>
+        <div style="font-weight:700;margin-bottom:.4rem;">Instagram Carousel Creators</div>
+        <div style="font-size:11px;color:var(--muted2);line-height:1.7;">10-slide text + illustration carousels specifically. NOT general Instagram creators chasing reels/reach. Test last.</div>
+      </div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;">
+      <div style="font-weight:700;margin-bottom:.75rem;">The One Metric That Matters in Phase 1</div>
+      <div style="font-size:13px;color:var(--muted2);line-height:1.8;">
+        Not followers. Not likes. <strong>How many people DM asking "how did you make this?"</strong><br>
+        That question = potential paying customer. Track it. When 50 people ask in a month → product-market fit evidence.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONTENT PLAN TAB ── -->
+  <div id="sp-content" class="tracker-panel">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;">
+      <div>
+        <div class="section-title">The Core Idea</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem;">
+          <div style="font-weight:700;margin-bottom:.5rem;">SketchPen becomes its own first customer</div>
+          <div style="font-size:12px;color:var(--muted2);line-height:1.8;">Run accounts across platforms publishing illustrations daily. Every post proves the product works. Writers and creators see the output, want it for themselves, and come to you. Product markets itself by existing publicly.</div>
+        </div>
+        <div class="section-title">5 Content Pillars</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;">
+          <div style="font-size:12px;color:var(--muted2);line-height:2.4;">
+            <strong>1. Famous Quotes Illustrated</strong> — Twain, Tolkien, Gandhi, Jobs. Universally shareable.<br>
+            <strong>2. Satirical Observations</strong> — Tech culture, remote work, AI, modern life. Highest virality.<br>
+            <strong>3. Business & Startup Concepts</strong> — Leaky bucket, PMF, traction. LinkedIn gold.<br>
+            <strong>4. Science & Education Explainers</strong> — Photosynthesis, water cycle. Teacher audience.<br>
+            <strong>5. Micro Stories</strong> — Single-scene illustrations. Emotional brand connection.
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-title">Platform Strategy</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem;">
+          <table style="width:100%;font-size:11px;border-collapse:collapse;">
+            <thead><tr style="border-bottom:1px solid var(--border);">
+              <th style="text-align:left;padding:4px 6px;font-family:'DM Mono',monospace;color:var(--muted);">Platform</th>
+              <th style="text-align:left;padding:4px 6px;font-family:'DM Mono',monospace;color:var(--muted);">Content</th>
+              <th style="text-align:left;padding:4px 6px;font-family:'DM Mono',monospace;color:var(--muted);">Freq</th>
+            </tr></thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:5px 6px;font-weight:600;">Instagram</td><td style="padding:5px 6px;color:var(--muted2);">Quotes + Satirical + Stories</td><td style="padding:5px 6px;color:var(--muted);">1/day</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:5px 6px;font-weight:600;">LinkedIn</td><td style="padding:5px 6px;color:var(--muted2);">Business concepts + Frameworks</td><td style="padding:5px 6px;color:var(--muted);">4/week</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:5px 6px;font-weight:600;">Medium</td><td style="padding:5px 6px;color:var(--muted2);">"I illustrated X quotes using AI sketches"</td><td style="padding:5px 6px;color:var(--muted);">1/week</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:5px 6px;font-weight:600;">Substack</td><td style="padding:5px 6px;color:var(--muted2);">"The Weekly Sketch" — 1 illus + story</td><td style="padding:5px 6px;color:var(--muted);">1/week</td></tr>
+              <tr style="border-bottom:1px solid var(--border);"><td style="padding:5px 6px;font-weight:600;">Pinterest</td><td style="padding:5px 6px;color:var(--muted2);">All content repurposed</td><td style="padding:5px 6px;color:var(--muted);">Daily</td></tr>
+              <tr><td style="padding:5px 6px;font-weight:600;">X / Twitter</td><td style="padding:5px 6px;color:var(--muted2);">Satirical + quotes</td><td style="padding:5px 6px;color:var(--muted);">2/day</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;">
+          <div style="font-weight:700;margin-bottom:.5rem;">90-Day Plan</div>
+          <div style="font-size:12px;color:var(--muted2);line-height:1.8;">
+            <strong>Month 1:</strong> 30 illustrations across platforms. Test which pillar gets most saves/shares.<br>
+            <strong>Month 2:</strong> Launch Substack "The Weekly Sketch". Tag writers. Make illustrations FOR specific creators publicly.<br>
+            <strong>Month 3:</strong> Launch publicly. Founding member pricing to engaged audience. Post 90-day case study.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:1.25rem;">
+      <div style="font-weight:700;color:#c0440a;margin-bottom:.5rem;">🚀 Start This Week — 7 Illustrations to Schedule Now</div>
+      <div style="font-size:12px;color:var(--muted2);line-height:2;">
+        1. Famous quote (Tolkien / Twain / Orwell) · 2. Satirical tech observation · 3. Startup concept (leaky bucket done ✅) · 4. Children's story scene · 5. Newspaper editorial cartoon style · 6. LinkedIn thought leadership concept · 7. Science explainer
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TECH STACK TAB ── -->
+  <div id="sp-tech" class="tracker-panel">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+      <div>
+        <div class="section-title">Stack</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem;">
+          <div style="font-size:12px;color:var(--muted2);line-height:2.4;font-family:'DM Mono',monospace;">
+            Frontend:  Next.js 14 (App Router) + Tailwind CSS<br>
+            AI:        Gemini 3.5 Flash (primary) via Google AI API<br>
+            Fallback:  Claude Sonnet 4.6 (complex human figures)<br>
+            Auth:      Clerk<br>
+            DB:        Supabase (Postgres + RLS)<br>
+            Payments:  Stripe (subscriptions)<br>
+            Deploy:    Vercel (Edge Runtime for streaming)<br>
+            SVG→PNG:   @resvg/resvg-js (server-side, 2400px wide)
+          </div>
+        </div>
+        <div class="section-title">SVG Streaming Architecture</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;">
+          <div style="font-size:12px;color:var(--muted2);line-height:1.8;">
+            Claude/Gemini streams SVG tokens → Next.js API route forwards as SSE → React component accumulates tokens into bufferRef → requestAnimationFrame loop injects partial SVG into DOM via innerHTML every ~16ms → browser SVG parser renders partial SVG in real-time → "drawing itself" effect.<br><br>
+            <strong>Key insight:</strong> Browser tolerates incomplete SVG. Renders whatever valid elements exist, ignores broken tags at tail.
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="section-title">SVG Element Painting Order (Critical)</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1rem;">
+          <div style="font-family:'DM Mono',monospace;font-size:11px;line-height:2.2;color:var(--muted2);">
+            Layer 1 — paper background (#fdfcf8)<br>
+            Layer 2 — sky / distant exterior / atmosphere<br>
+            Layer 3 — background structures (buildings, walls)<br>
+            Layer 4 — mid-ground (ground, floors, streets)<br>
+            Layer 5 — foreground frames (4 border rects, never opaque overlay)<br>
+            Layer 6 — main subjects (people, animals, focal objects)<br>
+            Layer 7 — detail passes (hatching, props, clothing)<br>
+            Layer 8 — atmospheric effects (fog, steam, rain)<br>
+            Layer 9 — text: title + desc + watermark only
+          </div>
+          <div style="margin-top:.75rem;background:var(--red-bg);border-radius:8px;padding:.5rem .75rem;font-size:11px;color:var(--red);">
+            ❌ Never draw window as single opaque rect — use 4 border rects<br>
+            ❌ Never use inline style="..." attributes<br>
+            ❌ Never draw humans as stick figures or circles
+          </div>
+        </div>
+        <div class="section-title">Human Figure Rule</div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.25rem;">
+          <div style="font-size:12px;color:var(--muted2);line-height:1.8;">
+            All human figures use anatomically proportioned bezier paths (Q and C curves). Head = oval path. Arms/legs = two-sided paths showing volume. Clothing = separate path layered over body. Hair = filled path. Face = brows, almond eyes, nose, mouth. Proportions: head = 1/7 to 1/8 total height.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer"><span class="footer-text">SketchPen · Solsystems App Studio · Started Jun 2026</span></div>
+</div>
+
+<script>
+  function showSP(id, btn) {
+    document.querySelectorAll('[id^="sp-"]').forEach(p=>p.classList.remove('active'));
+    btn.closest('div').querySelectorAll('.tracker-tab').forEach(t=>t.classList.remove('active'));
+    document.getElementById('sp-'+id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
 
 <script>
   const d = new Date();
