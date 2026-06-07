@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SketchPen — Build Tracker</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --paper: #faf8f4;
+    --ink: #1a1814;
+    --ink-2: #6b6560;
+    --ink-3: #a8a29c;
+    --gold: #e8961e;
+    --gold-light: #fef3dc;
+    --green: #2d6a4f;
+    --green-light: #d8f3dc;
+    --red: #c0392b;
+    --red-light: #fde8e6;
+    --blue: #1a4f8c;
+    --blue-light: #dce8f8;
+    --line: rgba(26,24,20,.08);
+    --serif: 'Instrument Serif', Georgia, serif;
+    --mono: 'Geist Mono', 'Fira Code', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+  }
+
+  .shell {
+    position: relative; z-index: 1;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── Back link ── */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 0 0;
+    font-size: 12px;
+    color: var(--ink-3);
+    text-decoration: none;
+    letter-spacing: .04em;
+    transition: color 120ms ease;
+  }
+  .back-link:hover { color: var(--ink); }
+
+  .site-header {
+    padding: 20px 0 32px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .site-title {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .site-title span {
+    font-style: normal;
+    font-size: 13px;
+    font-family: var(--mono);
+    color: var(--ink-3);
+    display: block;
+    margin-top: 6px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .site-meta {
+    text-align: right;
+    font-size: 12px;
+    color: var(--ink-3);
+    line-height: 1.8;
+  }
+  .site-meta strong {
+    color: var(--ink-2);
+    display: block;
+    font-weight: 500;
+  }
+
+  .day {
+    margin-bottom: 56px;
+    animation: fadeUp 500ms ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .day-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .day-label {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .day-date {
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: .06em;
+  }
+  .day-badge {
+    margin-left: auto;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .badge-today  { background: var(--gold-light);  color: var(--gold);  border: 1px solid rgba(232,150,30,.2); }
+  .badge-done   { background: var(--green-light); color: var(--green); border: 1px solid rgba(45,106,79,.15); }
+  .badge-upcoming { background: var(--blue-light); color: var(--blue); border: 1px solid rgba(26,79,140,.15); }
+
+  .section { margin-bottom: 24px; }
+  .section-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .tasks { display: flex; flex-direction: column; gap: 6px; }
+
+  .task {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    transition: background 120ms ease;
+  }
+  .task:hover { background: rgba(26,24,20,.03); }
+
+  .task-icon {
+    width: 18px; height: 18px;
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .task-done     .task-icon { background: var(--green-light); color: var(--green); }
+  .task-pending  .task-icon { background: var(--gold-light);  color: var(--gold); }
+  .task-blocked  .task-icon { background: var(--red-light);   color: var(--red); }
+  .task-tomorrow .task-icon { background: var(--blue-light);  color: var(--blue); }
+
+  .task-body { flex: 1; min-width: 0; }
+  .task-title { font-size: 13px; color: var(--ink); line-height: 1.45; }
+  .task-done .task-title {
+    color: var(--ink-2);
+    text-decoration: line-through;
+    text-decoration-color: rgba(26,24,20,.25);
+  }
+  .task-note { font-size: 12px; color: var(--ink-3); margin-top: 2px; line-height: 1.45; }
+  .task-tag {
+    font-size: 11px;
+    padding: 2px 7px;
+    border-radius: 6px;
+    background: var(--line);
+    color: var(--ink-3);
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+    align-self: flex-start;
+  }
+
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .metric {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 0 2px 8px rgba(26,24,20,.04);
+  }
+  .metric-val {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-style: italic;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .metric-label {
+    font-size: 11px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  .note-block {
+    background: white;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 12px 12px 0;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(26,24,20,.04);
+  }
+  .note-block p { font-size: 13px; color: var(--ink-2); line-height: 1.65; }
+  .note-block strong { color: var(--ink); font-weight: 500; }
+
+  .divider { border: none; border-top: 1px dashed var(--line); margin: 40px 0; }
+
+  .site-footer {
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+    font-size: 12px;
+    color: var(--ink-3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .site-footer a { color: var(--ink-2); text-decoration: none; }
+  .site-footer a:hover { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .site-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .site-meta { text-align: left; }
+    .metrics { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <a href="/" class="back-link">← Back to RedCoat 2026</a>
+
+  <header class="site-header">
+    <div>
+      <h1 class="site-title">
+        Build Journal
+        <span>SketchPen · redcoat-2026</span>
+      </h1>
+    </div>
+    <div class="site-meta">
+      <strong>@ramalingareddik</strong>
+      Hyderabad → USA/UK audience
+    </div>
+  </header>
+
+  <!-- DAY 1 -->
+  <div class="day" style="animation-delay:0ms">
+    <div class="day-header">
+      <div class="day-label">Day 1</div>
+      <div class="day-date">Mon, June 8 2026</div>
+      <span class="day-badge badge-done">Completed</span>
+    </div>
+
+    <div class="metrics">
+      <div class="metric"><div class="metric-val">2</div><div class="metric-label">DMs sent</div></div>
+      <div class="metric"><div class="metric-val">0</div><div class="metric-label">Replies</div></div>
+      <div class="metric"><div class="metric-val">$0.16</div><div class="metric-label">Avg cost/illus</div></div>
+      <div class="metric"><div class="metric-val">10</div><div class="metric-label">Test SVGs run</div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Product</div>
+      <div class="tasks">
+        <div class="task task-done">
+          <div class="task-icon">✓</div>
+          <div class="task-body">
+            <div class="task-title">Updated system prompt to v2 — vintage editorial pen-and-ink style</div>
+            <div class="task-note">Banned circle/ellipse for organic shapes. Added water rendering rule. Token budget rule added.</div>
+          </div>
+          <div class="task-tag">prompt</div>
+        </div>
+        <div class="task task-done">
+          <div class="task-icon">✓</div>
+          <div class="task-body">
+            <div class="task-title">Validated Sonnet 4.5 as production model — Gemini 3.5 Flash rejected</div>
+            <div class="task-note">Gemini drew 36 paths vs 155–273 for Sonnet. Didn't render the elephant subject at all.</div>
+          </div>
+          <div class="task-tag">model</div>
+        </div>
+        <div class="task task-done">
+          <div class="task-icon">✓</div>
+          <div class="task-body">
+            <div class="task-title">Newsletter cover microsite live — sketchy-pen.vercel.app/newsletter-cover</div>
+            <div class="task-note">Two-call API: Haiku for topic→scene translation, Sonnet for SVG generation. 5 free credits via localStorage.</div>
+          </div>
+          <div class="task-tag">shipped</div>
+        </div>
+        <div class="task task-done">
+          <div class="task-icon">✓</div>
+          <div class="task-body">
+            <div class="task-title">HyperFrame demo video built — 6 scenes, 57 seconds, single HTML file</div>
+            <div class="task-note">Fixed fitStage() scaling, SVG shell fade-in, stroke-width corruption bug. Production ready.</div>
+          </div>
+          <div class="task-tag">shipped</div>
+        </div>
+        <div class="task task-done">
+          <div class="task-icon">✓</div>
+          <div class="task-body">
+            <div class="task-title">HyperFrame saved as installable .skill file</div>
+            <div class="task-note">Covers full workflow: stage scaling, scene templates, SVG embedding, palette guide.</div>
+          </div>
+          <div class="task-tag">skill</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Pricing & Economics</div>
+      <div class="tasks">
+        <div class="task task-done">
+          <div class="task-icon">✓</div>
+          <div class="task-body">
+            <div class="task-title">Unit economics validated — $0.11–$0.21 per illustration, avg $0.16</div>
+            <div class="task-note">Simple scenes: $0.11. Standard: $0.16. Complex (elephant, multi-figure): $0.21.</div>
+          </div>
+          <div class="task-tag">economics</div>
+        </div>
+        <div class="task task-done">
+          <div class="task-icon">✓</div>
+          <div class="task-body">
+            <div class="task-title">Pricing page updated — 25 / 60 / 130 credits at $15 / $29 / $49</div>
+            <div class="task-note">Per-credit price callouts added: $0.60 / $0.48 / $0.38. Commercial license removed — universal now.</div>
+          </div>
+          <div class="task-tag">pricing</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Traction & Distribution</div>
+      <div class="tasks">
+        <div class="task task-done">
+          <div class="task-icon">✓</div>
+          <div class="task-body">
+            <div class="task-title">8 Substack writer targets identified and profiled</div>
+            <div class="task-note">Swapnil, Ben Lang, Lane Moore, Marco Annunziata, MX Katyayani, Mary Angela, Onyii, Great Upset.</div>
+          </div>
+          <div class="task-tag">outreach</div>
+        </div>
+        <div class="task task-done">
+          <div class="task-icon">✓</div>
+          <div class="task-body">
+            <div class="task-title">DM sent to Swapnil Agarwal (@SwapAgarwal) — SelfMade series angle</div>
+          </div>
+          <div class="task-tag">sent</div>
+        </div>
+        <div class="task task-done">
+          <div class="task-icon">✓</div>
+          <div class="task-body">
+            <div class="task-title">DM sent to Ben Lang — Next Play newsletter angle</div>
+          </div>
+          <div class="task-tag">sent</div>
+        </div>
+        <div class="task task-done">
+          <div class="task-icon">✓</div>
+          <div class="task-body">
+            <div class="task-title">Twitter profile updated — clay pot illustration as header, SketchPen in bio</div>
+          </div>
+          <div class="task-tag">profile</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note-block">
+      <p><strong>Key insight today:</strong> The "same artist" positioning is the real moat — not the illustration generator itself. Every illustration looks like it came from the same hand. This is the design system problem we're solving for content creators who can't afford a designer. Style DNA system identified as the long-term lock-in, but not building it yet — validating the core first.</p>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- DAY 2 -->
+  <div class="day" style="animation-delay:80ms">
+    <div class="day-header">
+      <div class="day-label">Day 2</div>
+      <div class="day-date">Tue, June 9 2026</div>
+      <span class="day-badge badge-upcoming">Tomorrow</span>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Morning — before office</div>
+      <div class="tasks">
+        <div class="task task-tomorrow">
+          <div class="task-icon">→</div>
+          <div class="task-body">
+            <div class="task-title">Swap profile picture to real photo on @ramalingareddik</div>
+            <div class="task-note">The AI cartoon avatar undermines the hand-drawn editorial brand. Real photo builds trust with US writer audience.</div>
+          </div>
+          <div class="task-tag">2 min</div>
+        </div>
+        <div class="task task-tomorrow">
+          <div class="task-icon">→</div>
+          <div class="task-body">
+            <div class="task-title">Fix bio duplication — "previously" appears twice</div>
+            <div class="task-note">"Building SketchyPen — hand-drawn illustrations for newsletter writers. sketchy-pen.vercel.app. Previously built Mockman.ai"</div>
+          </div>
+          <div class="task-tag">2 min</div>
+        </div>
+        <div class="task task-tomorrow">
+          <div class="task-icon">→</div>
+          <div class="task-body">
+            <div class="task-title">Take Twitter Premium (₹213.50/month) — unlocks 6 locked DM targets</div>
+            <div class="task-note">ROI: one conversion from 6 targets = worth 100x the cost. Cancel month 2 if not scaling outreach.</div>
+          </div>
+          <div class="task-tag">₹213</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Outreach — send remaining 6 DMs</div>
+      <div class="tasks">
+        <div class="task task-tomorrow">
+          <div class="task-icon">→</div>
+          <div class="task-body">
+            <div class="task-title">DM Marco Annunziata (@marcoannunziata) — Just Think economics newsletter</div>
+          </div>
+          <div class="task-tag">Twitter DM</div>
+        </div>
+        <div class="task task-tomorrow">
+          <div class="task-icon">→</div>
+          <div class="task-body">
+            <div class="task-title">DM MX Katyayani (@MXKatyayani) — social commentary writer</div>
+          </div>
+          <div class="task-tag">Twitter DM</div>
+        </div>
+        <div class="task task-tomorrow">
+          <div class="task-icon">→</div>
+          <div class="task-body">
+            <div class="task-title">DM Mary Angela Perna (@maryangelaperna) — read latest post first</div>
+            <div class="task-note">Fill in first line referencing her latest content before sending.</div>
+          </div>
+          <div class="task-tag">Twitter DM</div>
+        </div>
+        <div class="task task-tomorrow">
+          <div class="task-icon">→</div>
+          <div class="task-body">
+            <div class="task-title">DM Onyii Bekeh (@Onyiibekeh) — gut health doctor-writer, Beat the Bloat</div>
+          </div>
+          <div class="task-tag">Twitter DM</div>
+        </div>
+        <div class="task task-tomorrow">
+          <div class="task-icon">→</div>
+          <div class="task-body">
+            <div class="task-title">DM Lane Moore — Bluesky only (@hellolanemoore.bsky.social). Twitter is locked.</div>
+          </div>
+          <div class="task-tag">Bluesky</div>
+        </div>
+        <div class="task task-tomorrow">
+          <div class="task-icon">→</div>
+          <div class="task-body">
+            <div class="task-title">DM Great Upset (@Great_Upset) — publication angle, visual consistency across writers</div>
+          </div>
+          <div class="task-tag">Twitter DM</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Content — post once today</div>
+      <div class="tasks">
+        <div class="task task-tomorrow">
+          <div class="task-icon">→</div>
+          <div class="task-body">
+            <div class="task-title">Post one illustration on @ramalingareddik with the prompt that generated it</div>
+            <div class="task-note">Format: "Typed: '[prompt]' / Got this. Made with SketchPen — free at sketchy-pen.vercel.app" · No pitch · Let the image do the work.</div>
+          </div>
+          <div class="task-tag">Twitter</div>
+        </div>
+        <div class="task task-tomorrow">
+          <div class="task-icon">→</div>
+          <div class="task-body">
+            <div class="task-title">Reply to 5 US Substack writer tweets — genuine engagement, no SketchPen mention</div>
+            <div class="task-note">Search: "published my newsletter" / "new Substack issue" / "wrote this week"</div>
+          </div>
+          <div class="task-tag">Twitter</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Evening — after office</div>
+      <div class="tasks">
+        <div class="task task-tomorrow">
+          <div class="task-icon">→</div>
+          <div class="task-body">
+            <div class="task-title">Check replies from Swapnil and Ben — respond within 1 hour if they've replied</div>
+            <div class="task-note">48 hours is normal response window. Don't follow up yet if silent.</div>
+          </div>
+          <div class="task-tag">follow-up</div>
+        </div>
+        <div class="task task-tomorrow">
+          <div class="task-icon">→</div>
+          <div class="task-body">
+            <div class="task-title">Log today's outreach results in this tracker</div>
+            <div class="task-note">Who replied, what they said, what illustration they tried, what feedback came back.</div>
+          </div>
+          <div class="task-tag">log</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note-block">
+      <p><strong>Day 2 success looks like:</strong> 6 DMs sent. 1 reply from any of the 8 total. 1 illustration post published. Profile picture updated to real photo. If someone tries the microsite and gives feedback — that's the best possible outcome. One real user's reaction is worth more than 50 silent DMs.</p>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- ROADMAP -->
+  <div class="day" style="animation-delay:160ms">
+    <div class="day-header">
+      <div class="day-label">Roadmap</div>
+      <div class="day-date">Week 1–4</div>
+      <span class="day-badge badge-upcoming">Planned</span>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Week 1 — Validate & Ship</div>
+      <div class="tasks">
+        <div class="task task-pending">
+          <div class="task-icon">○</div>
+          <div class="task-body"><div class="task-title">Get first 3 real user responses from outreach</div></div>
+          <div class="task-tag">traction</div>
+        </div>
+        <div class="task task-pending">
+          <div class="task-icon">○</div>
+          <div class="task-body">
+            <div class="task-title">Public gallery — save generations with shareable URL /g/[id]</div>
+            <div class="task-note">Needed before sending pre-generated illustrations in outreach DMs.</div>
+          </div>
+          <div class="task-tag">product</div>
+        </div>
+        <div class="task task-pending">
+          <div class="task-icon">○</div>
+          <div class="task-body"><div class="task-title">Implement prompt caching — reduce API cost ~15-20%</div></div>
+          <div class="task-tag">infra</div>
+        </div>
+        <div class="task task-pending">
+          <div class="task-icon">○</div>
+          <div class="task-body"><div class="task-title">Post daily illustrations on Twitter — 7 consecutive days</div></div>
+          <div class="task-tag">distribution</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Week 2 — First Paying Customer</div>
+      <div class="tasks">
+        <div class="task task-pending">
+          <div class="task-icon">○</div>
+          <div class="task-body"><div class="task-title">First paying customer — target $15 Starter plan</div></div>
+          <div class="task-tag">revenue</div>
+        </div>
+        <div class="task task-pending">
+          <div class="task-icon">○</div>
+          <div class="task-body">
+            <div class="task-title">Scene complexity detection — charge 1 / 1.5 / 2 credits by complexity</div>
+            <div class="task-note">Protects margin on $0.21 complex generations.</div>
+          </div>
+          <div class="task-tag">product</div>
+        </div>
+        <div class="task task-pending">
+          <div class="task-icon">○</div>
+          <div class="task-body"><div class="task-title">Post in Substack Writers Facebook group and Newsletter Crew Slack</div></div>
+          <div class="task-tag">distribution</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Week 3–4 — Scale</div>
+      <div class="tasks">
+        <div class="task task-pending">
+          <div class="task-icon">○</div>
+          <div class="task-body">
+            <div class="task-title">Product Hunt launch — "Free Newsletter Cover Generator"</div>
+            <div class="task-note">Not SketchPen full product. Just the microsite as a standalone free tool.</div>
+          </div>
+          <div class="task-tag">launch</div>
+        </div>
+        <div class="task task-pending">
+          <div class="task-icon">○</div>
+          <div class="task-body">
+            <div class="task-title">Style DNA system — onboarding taste quiz, per-user style profile</div>
+            <div class="task-note">Build only after first 10 paying users. Validate the "same artist" positioning first.</div>
+          </div>
+          <div class="task-tag">product</div>
+        </div>
+        <div class="task task-pending">
+          <div class="task-icon">○</div>
+          <div class="task-body"><div class="task-title">Test Gemini Pro API when available — cost reduction path</div></div>
+          <div class="task-tag">model</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div>SketchPen · Build Journal · redcoat-2026</div>
+    <div>
+      <a href="https://sketchy-pen.vercel.app" target="_blank">sketchy-pen.vercel.app</a>
+      · <a href="https://x.com/ramalingareddik" target="_blank">@ramalingareddik</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
